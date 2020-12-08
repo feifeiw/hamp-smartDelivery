@@ -1,0 +1,14 @@
+<!--pages/register/register.wxml-->
+<!-- <text>pages/register/register.wxml</text> -->
+<view class="regiester">
+  <view class="tips">未查询到注册信息，清先注册</view>
+  <form bindsubmit="submit" class="regiester_form">
+    <view><input name="name" placeholder="请输入真实姓名" /></view>
+    <view class="regiester_item">
+      <input name="phone" placeholder="请输入手机号码" />
+      <text class="code" bindtap="getCode">获取验证码</text>
+    </view>
+    <view><input name="code" placeholder="请输入验证码" /></view>
+    <button form-type="submit" class="regiesterBtn">立即注册</button>
+  </form>
+</view>

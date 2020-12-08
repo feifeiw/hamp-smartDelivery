@@ -1,0 +1,33 @@
+{
+  "pages":[
+    "pages/register/register",
+    "pages/user/user",
+    "pages/index/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "汉普日程助理",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#5275f5",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "日程",
+      "iconPath": "static/image/date.png",
+      "selectedIconPath": "static/image/date_select.png"
+    },{
+      "pagePath": "pages/user/user",
+      "text": "我的",
+      "iconPath": "static/image/my.png",
+      "selectedIconPath": "static/image/my_select.png"
+    }]
+  },
+  "debug": true,
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
