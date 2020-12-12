@@ -1,0 +1,8 @@
+<!--pages/signFor/signFor.wxml-->
+<view class="singForWrapper scanCodeIndex">
+  <!-- 扫码 -->
+  <view class="scanBtn">
+    <view class="tips">请扫码确认签收</view>
+    <button bindtap="startScanCode">扫一扫</button>
+  </view>
+</view>

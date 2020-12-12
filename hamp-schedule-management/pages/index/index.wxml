@@ -1,12 +1,46 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<view class="IndexContainer">
+  <!-- 日历 -->
+  <view class="datePicker">
   </view>
-  <view class="usermotto">
+  <!-- 日程 -->
+  <view class="dateNote">
+    <view style="position: relative;padding-top: 150rpx;">
+      <view class="choseDate">
+        <view class="arrow"><image src="../../static/image/arrow_down.png" class=""></image></view>
+        <text class="day">{{choseDate}}</text>
+      </view>
+      <view class="noteUl">
+        <!--  -->
+        <view class="noteLi" wx:for="{{dataArr}}" wx:key="caseid">
+          <text style="color:#000;font-weight:blod;">案号：{{item.caseno}}</text>
+          <view class="noteLi_block">
+            <text>案     由：</text><text>{{item.cause}}</text>
+          </view>
+          <view class="noteLi_block">
+            <text>开庭时间：</text><text>{{item.courttime}}</text>
+          </view>
+          <view class="noteLi_block">
+            <text>开庭法庭：</text><text>{{item.courtroom}}</text>
+          </view>
+          <view class="noteLi_block">
+            <text>承办法官：</text><text>{{item.judgename}}</text>
+          </view>
+          <view class="noteLi_block">
+            <text>合 议 庭：</text><text>{{item.cause}}</text>
+          </view>
+          <view class="noteLi_block">
+            <text>书  记  员：</text><text>{{item.clerk}}</text>
+          </view>
+          <view class="noteLi_block">
+            <text>助 理：</text><text>{{item.members}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 客服按钮 -->
+  <view class="service">
+    <image src="../../static/image/phone.png"></image>
   </view>
 </view>

@@ -1,0 +1,53 @@
+/* pages/report/report.wxss */
+.IndexWrapper{
+  width: 750rpx;
+  height: 1000rpx;
+  background: #f9f9f9;
+  position: relative;
+}
+.tabcontent {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  border-top: 1px solid #f2f2f2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  height: 90rpx;
+  line-height: 90rpx;
+}
+.tabcontent .tabcell {
+  width: 33.333%;
+  text-align: center;
+  font-size: 32rpx;
+  position: relative;
+  font-weight: 600;
+}
+.tabcontent .active {
+  color: #6f8cf4;
+}
+.tabList{
+  padding-top: 120rpx;
+  display: inline-block;
+  width: 100%;
+}
+.tabList .tabLi{
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20rpx 30rpx;
+  margin-bottom: 30rpx;
+  font-size: 30rpx;
+  color: #333;
+  line-height: 56rpx;
+}
+.tabList .tabLi text{
+  color: #999;
+}
+.noMsg{
+  text-align: center;
+  margin: 80rpx 0;
+  font-size: 34rpx;
+  color: #999;
+}

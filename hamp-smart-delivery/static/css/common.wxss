@@ -1,0 +1,198 @@
+/**common.wxss**/
+/* 公共图标 */
+button{
+  border-radius: 0 !important;
+}
+/* 扫码主页面 */
+.scanCodeIndex{
+  width: 750rpx;
+  background: #fff;
+}
+.scanCodeIndex .scanBtn{
+  margin-top: 400rpx;
+  width: 100%;
+  text-align: center;
+}
+.scanCodeIndex .scanBtn button{
+  font-size: 40rpx !important;
+  color: #fff;
+  background: #5275f5;
+  width: 80%;
+}
+.scanCodeIndex .scanBtn .tips{
+  font-size: 36rpx;
+  margin-bottom:40rpx;
+  color: #999;
+}
+/* 扫码案件信息 */
+.caseInformation{
+  width: 750rpx;
+  background: #fff;
+  padding-bottom: 200rpx;
+  box-sizing: border-box;
+}
+.caseContent{
+  width: 100%;
+  padding: 20rpx 40rpx;
+  box-sizing: border-box;
+}
+.title{
+  font-size: 36rpx;
+  line-height: 38rpx;
+  margin: 30rpx 0;
+  color: #000;
+  border-left: 10rpx solid #5275f5;
+  padding-left: 20rpx;
+}
+.item{
+  width: 100%;
+  height: 84rpx;
+  line-height: 84rpx;
+  display: inline-block;
+  font-size: 30rpx;
+  border-bottom: 2rpx solid #f3f3f3;
+}
+.item label{
+  color:#000;
+}
+.item text{
+  float:right;
+  color: #999;
+}
+.caseFooter{
+  width: 750rpx;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  padding: 30rpx 0;
+  background: #fff;
+}
+.caseFooter .button{
+  width: 280rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 34rpx;
+  margin: 0 20rpx;
+  border-radius: initial;
+  font-weight: normal;
+  display: inline-block;
+}
+.btn-primary{
+  background:#5275f5;
+  color:#fff;
+  border-radius: 0;
+  font-weight: normal;
+}
+.btn-default{
+  background:#eeeeee;
+  color:#000;
+  border-radius: 0;
+  font-weight: normal;
+}
+/* 送达-上传图片 */
+.updateDataCommon{
+  width: 750rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.updateDataCommon .formContent{
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 180rpx;
+  overflow-y: auto;
+}
+.updateDataCommon .formItems{
+  margin-bottom: 30rpx;
+}
+.updateDataCommon .tips{
+  color: #666;
+  font-size: 34rpx;
+  margin: 30rpx 0;
+  width: 100%;
+  display: inline-block;
+}
+.float-rt{
+  float: right;
+}
+.updateDataCommon .itembox{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.updateDataCommon .itembox .check_label{
+  display: inline-block;
+  margin: 8rpx;
+}
+.updateDataCommon .itembox .check_label radio{
+  display: none;
+}
+.updateDataCommon .itembox .check_label .check_name{
+  font-size: 32rpx;
+  width: auto;
+  height: auto;
+  padding: 20rpx;
+  border: 1rpx solid #eeeeee;
+}
+.updateDataCommon .itembox .check_label .check_name.checked{
+  background: #5275f5;
+  border: 1rpx solid #5275f5;
+  color: #fff;
+}
+.updateDataCommon .btn-area{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  padding: 30rpx 0;
+  text-align: center;
+}
+.updateDataCommon .btn-area button{
+  width: 85% !important;
+  font-size: 36rpx !important;
+  padding: 16rpx 0 !important;
+}
+.updateDataCommon .uploadImg{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.updateDataCommon .addImg{
+  width: 155rpx;
+  height: 155rpx;
+  margin: 8rpx;
+}
+.updateDataCommon .addImg image{
+  width: 100%;
+  height: 100%;
+}
+
+.updateDataCommon .btnGroup{
+  width: 100%;
+  height: 100rpx;
+  font-size: 30rpx;
+  color: #FFF;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  line-height: 100rpx;
+  text-align: center;
+}
+.updateDataCommon .btn{
+  width: 100%;
+  height: 100%;
+}
+.updateDataCommon .uploadTips{
+  color: #999;
+  font-size: 28rpx;
+  width: 100%;
+  margin-top: 20rpx;
+}

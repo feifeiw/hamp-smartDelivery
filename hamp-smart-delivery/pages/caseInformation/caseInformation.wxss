@@ -1,0 +1,63 @@
+/* pages/caseInformation/caseInformation.wxss */
+.caseInformation{
+  width: 750rpx;
+  background: #fff;
+  padding-bottom: 200rpx;
+  box-sizing: border-box;
+}
+.caseContent{
+  width: 100%;
+  padding: 20rpx 40rpx;
+  box-sizing: border-box;
+}
+.title{
+  font-size: 36rpx;
+  line-height: 38rpx;
+  margin: 30rpx 0;
+  color: #000;
+  border-left: 10rpx solid #5275f5;
+  padding-left: 20rpx;
+}
+.item{
+  width: 100%;
+  height: 84rpx;
+  line-height: 84rpx;
+  display: inline-block;
+  font-size: 30rpx;
+  border-bottom: 2rpx solid #f3f3f3;
+}
+.item label{
+  color:#000;
+}
+.item text{
+  float:right;
+  color: #999;
+}
+.caseFooter{
+  width: 750rpx;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  padding: 30rpx 0;
+  background: #fff;
+}
+.caseFooter .button{
+  width: 280rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 34rpx;
+  margin: 0 20rpx;
+  border-radius: initial;
+  font-weight: normal;
+  display: inline-block;
+}
+.btn-primary{
+  background:#5275f5;
+  color:#fff;
+}
+.btn-default{
+  background:#eeeeee;
+  color:#000;
+}

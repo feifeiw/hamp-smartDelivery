@@ -1,0 +1,50 @@
+<!--pages/sendSuccess/sendSuccess.wxml-->
+<view class="IndexWrapper updateDataCommon">
+    <form catchsubmit="formSendSubmit" class="formContent">
+        <view class="formItems">
+            <view class="tips">签收原因</view>
+            <view class="itembox">
+                <radio-group bindchange="radioChange">
+                    <label class="check_label" wx:for="{{items}}" wx:key="id">
+                        <radio value="{{item.value}}" checked="{{item.checked}}"/>
+                        <view class="check_name {{item.checked?'checked':''}}">{{item.name}}</view>
+                    </label>
+                </radio-group>
+            </view>
+        </view>
+        <view class="formItems">
+            <view class="tips">
+                <text>上传面单图片</text>
+                <text class="float-rt">{{facialIndex}}/1</text>
+            </view>
+            <view class="uploadImg">
+                <view class="addImg" wx:for="{{facialphotoArr}}" wx:key="id" bindtap="facialPreviewImage" bindlongtap="facialDeleteImg" data-index="{{index}}"  data-src="{{item}}">
+                    <image src="{{item}}"></image>
+                </view>
+                <view class="addImg" bindtap="facialphotograph" wx:if="{{facialphotoArr.length < 1}}">
+                    <image src="../../static/image/Photograph.png"></image>
+                </view>
+            </view>
+            <view class="uploadTips">长按删除图片，电子面单必须上传</view>
+        </view>
+        <view class="formItems">
+            <view class="tips">
+                <text>上传照片</text>
+                <text class="float-rt">{{imgIndex}}/5</text>
+            </view>
+            <view class="uploadImg">
+                <view class="addImg" wx:for="{{photoArr}}" wx:key="k" bindtap="previewImage" bindlongtap="deleteImg" data-index="{{index}}" data-src="{{item}}">
+                    <image src="{{item}}"></image>
+                </view>
+                <!-- 拍照 -->
+                <view class="addImg" bindtap="photograph" wx:if="{{photoArr.length < 5}}">
+                    <image src="../../static/image/Photograph.png"></image>
+                </view>
+            </view>
+            <view class="uploadTips">长按删除图片，最少上传3张</view>
+        </view>
+        <view class="btn-area">
+            <button class="btn-primary" formType="submit">确认提交</button>
+        </view>
+    </form>
+</view>

@@ -1,0 +1,21 @@
+/* pages/signFor/signFor.wxss */
+.scanCodeIndex{
+  width: 750rpx;
+  background: #fff;
+}
+.scanCodeIndex .scanBtn{
+  margin-top: 400rpx;
+  width: 100%;
+  text-align: center;
+}
+.scanCodeIndex .scanBtn button{
+  font-size: 40rpx !important;
+  color: #fff;
+  background: #5275f5;
+  width: 80%;
+}
+.scanCodeIndex .scanBtn .tips{
+  font-size: 36rpx;
+  margin-bottom:40rpx;
+  color: #999;
+}

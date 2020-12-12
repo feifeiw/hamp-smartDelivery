@@ -1,0 +1,8 @@
+<!--pages/send/send.wxml-->
+<view class="sendWrapper scanCodeIndex">
+  <!-- 扫码 -->
+  <view class="scanBtn">
+    <view class="tips">请扫码确认送达</view>
+    <button bindtap="sendScanCode">扫一扫</button>
+  </view>
+</view>

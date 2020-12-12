@@ -1,0 +1,28 @@
+<!--pages/report/report.wxml-->
+<view class="IndexWrapper">
+    <!-- 头部 -->
+    <view class="tabcontent">
+        <block wx:for="{{tabs}}" wx:key="*this">
+            <view id="{{index}}" class="tabcell {{ activeIndex==index?'active':'' }} " bindtap="tabClick">
+            {{item}}
+            </view>
+        </block>
+    </view>
+    <!-- 列表 -->
+    <view class="tabList">
+        <view wx:if="{{dataArr.length > 0}}">
+            <block wx:for="{{dataArr}}" wx:key="*this">
+                <view class="tabLi">
+                    <view>案号：<text>{{item.caseno}}</text></view>
+                    <view>送达事件：<text>{{item.eventname}}</text></view>
+                    <view>送达发起日期：<text>{{item.startdate}}</text></view>
+                    <view>送达结束日期：<text>{{item.enddate}}</text></view>
+                    <view>送达时间：<text>{{item.sendTime}}</text></view>
+                </view>
+            </block>
+        </view>
+        <view wx:else class="noMsg">
+            <view>暂无数据</view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,15 @@
+<!--pages/map/map.wxml-->
+<view style="padding:20rpx 40rpx;width:750rpx;box-sizing:box-sizing;">
+  <view style="height:80rpx;">
+    <view>选择地址</view>
+    <view>当前地址：</view>
+    <text>经度{{latitude}}、纬度{{longitude}}</text>
+  </view>
+  <map
+      class="map"
+      id="myMap"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      show-location
+      style="width: 660rpx;box-sizing: border-box;height:800rpx;margin-top:100rpx;" />
+</view>

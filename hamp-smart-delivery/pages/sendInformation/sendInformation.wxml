@@ -1,0 +1,43 @@
+<!--pages/sendInformation/sendInformation.wxml-->
+<view class="caseInformation">
+  <!-- 案件信息 -->
+  <view class="caseContent">
+    <view class="title">案件信息</view>
+    <view class="item">
+      <label>案由</label><text>{{dataArr.cause}}</text>
+    </view>
+    <view class="item">
+      <label>案号</label><text>{{dataArr.caseno}}</text>
+    </view>
+    <view class="item">
+      <label>立案日期</label><text>{{dataArr.regdate}}</text>
+    </view>
+    <view class="item">
+      <label>承办部门</label><text>{{dataArr.undertakeorg}}</text>
+    </view>
+    <view class="item">
+      <label>承办人</label><text>{{dataArr.undertaker}}</text>
+    </view>
+    <view class="item">
+      <label>送达内容</label><text>{{dataArr.document}}</text>
+    </view>
+  </view>
+  <!-- 当事人信息 -->
+  <view class="caseContent">
+    <view class="title">当事人信息</view>
+    <view class="item">
+      <label>当事人姓名</label><text>{{dataArr.receiver}}</text>
+    </view>
+    <view class="item">
+      <label>电话</label><text>{{dataArr.phoneno}}</text>
+    </view>
+    <view class="item">
+      <label>地址</label><text>{{dataArr.deliveraddr}}</text>
+    </view>
+  </view>
+  <!-- 按钮 -->
+  <view class="caseFooter">
+    <view class="btn-primary button" bindtap="toSendConfirm">送达成功</view>
+    <view class="btn-default button" bindtap="toSendFail">送达失败</view>
+  </view>
+</view>

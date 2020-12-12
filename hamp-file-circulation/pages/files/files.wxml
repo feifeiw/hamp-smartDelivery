@@ -1,0 +1,47 @@
+<!--pages/files/files.wxml-->
+<view class="IndexWrapper">
+    <!-- 头部 -->
+    <view class="tabcontent">
+      <view class="tabUl">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="tabcell {{ activeIndex==index?'active':'' }} " bindtap="tabClick">
+            {{item}}
+          </view>
+        </block>
+      </view>
+      <!-- 时间段 -->  
+      <view class="picker_group" wx:if="{{activeIndex != 2}}">
+        <image src="/static/image/date.png" class="dateIcon"></image>
+        <picker mode="date" value="{{dateStart}}"  end="{{dateEnd}}" bindchange="bindDateStartChange">  
+          <view class="picker">  
+            {{dateStart}}  
+          </view>  
+        </picker>
+        -
+        <picker mode="date" value="{{date2}}" start="{{dateStart}}" end="{{dateEnd}}" bindchange="bindDateEndChange">  
+          <view class="picker">  
+            {{dateEnd}}  
+          </view>  
+        </picker>
+        <button class="searchBtn" bindtap="bindSearch">搜索</button>
+      </view> 
+    </view>
+    <!-- 列表 -->
+    <view class="tabList">
+        <view wx:if="{{dataArr.length > 0}}">
+            <block wx:for="{{dataArr}}" wx:key="*this">
+                <view class="tabLi">
+                    <view>案号：<text>{{item.caseno}}</text></view>
+                    <view>卷宗数：<text>{{item.filecount}}</text></view>
+                    <view>流转日期：<text>{{item.transdate}}</text></view>
+                    <view wx:if="{{activeIndex != 2}}">{{(activeIndex == 0) ? '每日签收时间：' : '转出时间：'}}{{item.sendTime}}</view>
+                    <!-- <view>送达结束日期：<text>{{item.enddate}}</text></view>
+                    <view>送达时间：<text>{{item.sendTime}}</text></view> -->
+                </view>
+            </block>
+        </view>
+        <view wx:else class="noMsg">
+            <view>暂无数据</view>
+        </view>
+    </view>
+</view>
