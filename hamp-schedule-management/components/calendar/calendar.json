@@ -1,6 +1,6 @@
 {
-  "usingComponents": {
-  },
+  "component": true,
+  "usingComponents":{},
   "navigationStyle": "default",
   "navigationBarTitleText": "日历",
   "navigationBarTextStyle": "black",

@@ -64,7 +64,6 @@ App({
                     method: 'GET',
                     success: function(res) {
                       if (res.data.result) {
-                        console.log('getOpenId', JSON.parse(res.data.data))
                         let jsonObj2 = JSON.parse(res.data.data); //json字符串转json对象
                         wx.setStorageSync('appCourtid',jsonObj2.unionId)
                         wx.setStorageSync('avatarUrl',jsonObj2.avatarUrl)

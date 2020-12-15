@@ -17,8 +17,30 @@ Page({
   //事件处理函数
   onLoad: function () {
 	let that = this
+	if (app.globalData.userInfo && app.globalData.userInfo != '') {
+		that.setData({
+			OPEN_ID: app.globalData.OPEN_ID,
+			wxlogin: app.wxlogin
+		})
+	} else {
+		// 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
+		app.testDataCallback = data => {
+			if (data != '') {
+				that.setData({
+					OPEN_ID: app.globalData.OPEN_ID,
+					wxlogin: app.wxlogin
+				})
+			}
+		}
+	}
+		
 	let today = until.formatTime(new Date());
 	that.setData({
+		// OPEN_ID: app.globalData.OPEN_ID,
+		end: DATE,
+		startdate: DATE,
+		enddate: DATE,
+		// wxlogin: app.wxlogin,
 		choseDate: today,
 		Today: today,
 		markDays: [today]
@@ -28,13 +50,6 @@ Page({
     })
     //获取当天日期
 	var DATE = that.data.choseDate;
-	that.setData({
-		OPEN_ID: app.globalData.OPEN_ID,
-		end: DATE,
-		startdate: DATE,
-		enddate: DATE,
-		wxlogin: app.wxlogin
-	})
 	//查询当天
 	var startdate = DATE + ' 00:00';
 	var enddate = DATE + ' 23:59';

@@ -1,10 +1,4 @@
 <view class="sign-calendar">
-  <wxs module="util">
-    var sub = function(val) {
-        return val[val]
-    }
-    module.exports.sub = sub;
-  </wxs>
   <view class="top-bar">
     <view bindtap="turning" data-name="prev"  class="turning">
       <image src="../../static/image/arrow_left.png"></image>
