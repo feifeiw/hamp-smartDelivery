@@ -1,0 +1,26 @@
+<view class="sign-calendar">
+  <wxs module="util">
+    var sub = function(val) {
+        return val[val]
+    }
+    module.exports.sub = sub;
+  </wxs>
+  <view class="top-bar">
+    <view bindtap="turning" data-name="prev">上个月</view>
+    <view>{{ y }}{{ text.year }}{{ m + 1 }}{{ text.month }}</view>
+    <view bindtap="turning" data-name="next">下个月</view>
+  </view>
+  <view class="week">
+    <view class="week-day" wx:for="{{weekDay}}" wx:key="*this">{{ item }}</view>
+  </view>
+  <view class="{!monthOpen ? hide : ''}" class="content">
+    <view style="top: {{positionTop  + 'rpx'}}" class="days">
+      <view class="item" wx:for="{{dates}}" wx:key="*this">
+        <view bindtap="selectOne" data-item="{{item}}"
+          class="day {{item.isDay ? 'todays' : ''}} {{(!item.lm)?'nolm' :''}} {{choose==(item.year+'-'+(item.month + 1)+'-'+item.date)?'chosed':''}}">{{item.date}}
+        </view>
+        <view class="tips">{{item.tips}}</view>
+      </view>
+    </view>
+  </view>
+</view>

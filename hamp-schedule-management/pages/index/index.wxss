@@ -18,10 +18,12 @@
 .datePicker{
   width: 750rpx;
   background: #fff;
+  position: relative;
+  z-index: 1;
 }
 .dateNote{
   width: 750rpx;
-  height: 550rpx;
+  height: 605rpx;
   background: #fff;
   box-shadow: 4px 1px 0 0 rgba(0,0,0,0.2);
   position: fixed;
@@ -29,8 +31,14 @@
   bottom: 0;
   z-index: 9;
 }
+.heightAuto.dateNote{
+  height: 900rpx !important;
+  transition: width 2s; 
+  -webkit-transition: width 2s;
+}
 .choseDate{
   padding: 0 40rpx;
+  box-sizing: border-box;
   border-bottom: 1px solid #eee;
   position:absolute;
   top: 0;
@@ -53,7 +61,8 @@
   height: 40rpx;
 }
 .noteUl{
-  height: 400rpx;
+  min-height: 450rpx;
+  height: calc(100% - 100rpx);
   position: relative;
   z-index: 9;
   padding: 18rpx 40rpx;
@@ -75,5 +84,9 @@
 .noteLi_block{
   width: 100%;
   display: inline-block;
-
+}
+.heightAuto image{
+  transition: width 2s; 
+  -webkit-transition: width 2s;
+  transform: rotate(180deg);
 }

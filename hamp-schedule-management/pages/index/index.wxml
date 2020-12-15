@@ -1,13 +1,14 @@
 <!--index.wxml-->
 <view class="IndexContainer">
   <!-- 日历 -->
-  <view class="datePicker">
+  <view class="datePicker" >
+    <calendar id="calendar" Today="{{Today}}" signeddates="{{signeddates}}" bindonClick="onDayClick"></calendar>
   </view>
   <!-- 日程 -->
-  <view class="dateNote">
-    <view style="position: relative;padding-top: 150rpx;">
+  <view class="dateNote {{heightAuto?'heightAuto':''}}">
+    <view style="position: relative;padding-top: 150rpx;height:100%;">
       <view class="choseDate">
-        <view class="arrow"><image src="../../static/image/arrow_down.png" class=""></image></view>
+        <view class="arrow {{heightAuto?'heightAuto':''}}" bindtap="arrowClick" data-flag="{{heightAuto}}"><image src="../../static/image/arrow_down.png" class=""></image></view>
         <text class="day">{{choseDate}}</text>
       </view>
       <view class="noteUl">

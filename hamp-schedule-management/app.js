@@ -38,11 +38,12 @@ App({
               wx.getUserInfo({
                 success: resThree => {
                   // 可以将 res 发送给后台解码出 unionId
-                  this.globalData.userInfo = resThree.userInfo
+                  console.log(resThree.userInfo)
+                  that.globalData.userInfo = resThree.userInfo
                   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
                   // 所以此处加入 callback 以防止这种情况
-                  if (this.userInfoReadyCallback) {
-                    this.userInfoReadyCallback(resThree)
+                  if (that.userInfoReadyCallback) {
+                    that.userInfoReadyCallback(resThree)
                   }
                   wx.showLoading({
                     title: '加载中',
@@ -63,8 +64,10 @@ App({
                     method: 'GET',
                     success: function(res) {
                       if (res.data.result) {
-                        let jsonObj = res.data.data; //json字符串
-                        let jsonObj2 = JSON.parse(jsonObj); //json字符串转json对象
+                        console.log('getOpenId', JSON.parse(res.data.data))
+                        let jsonObj2 = JSON.parse(res.data.data); //json字符串转json对象
+                        wx.setStorageSync('appCourtid',jsonObj2.unionId)
+                        wx.setStorageSync('avatarUrl',jsonObj2.avatarUrl)
                         if (jsonObj2.unionId.length > 10) {
                           wx.hideLoading();
                           //(原先使用的是openid，后来关联多个小程序时，多个小程序中的openid不相同.所以使用的是unionid) 
@@ -73,7 +76,6 @@ App({
                         } else {
                           that.onLaunch();
                         }
-                        console.log(res.data.wxlogin)
                         if (res.data.wxlogin.retcode != 0) {
                           that.wxlogin.courtid = null;
                           that.wxlogin.staffid = null;
@@ -85,10 +87,10 @@ App({
                             fail: function(res) {},
                             complete: function(res) {},
                           })
-                          // wx.showModal({
-                          //   title: '未绑定微信，不允许登录',
-                          //   content: res.data.wxlogin.retmessage
-                          // })
+                          wx.showModal({
+                            title: '未绑定微信，不允许登录',
+                            content: res.data.wxlogin.retmessage
+                          })
                         } else {
                           wx.setStorageSync('courtid',res.data.wxlogin.courtid)
                           wx.setStorageSync('staffid',res.data.wxlogin.staffid)
