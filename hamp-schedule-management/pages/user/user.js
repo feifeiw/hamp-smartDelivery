@@ -10,7 +10,8 @@ Page({
     avatarUrl: '',
     userInfo: {},
     userList: {},
-		hasUserInfo: false,
+    hasUserInfo: false,
+    OPEN_ID: '',
 		canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
@@ -19,22 +20,24 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    if (app.globalData.userInfo && app.globalData.userInfo != '') {
+    console.log('用户信息', app.globalData)
+    if (app.globalData.OPEN_ID && app.globalData.OPEN_ID != '') {
 			that.setData({
-				OPEN_ID: app.globalData.OPEN_ID,
-				wxlogin: app.wxlogin
+				OPEN_ID: app.globalData.OPEN_ID
 			})
 		} else {
-			// 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
+      // 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
+      console.log('调用app.js定义callback')
 			app.userInfoLoadCallback = userInfo => {
+        console.log('调用callback', userInfo)
 				if (userInfo != '') {
 					that.setData({
-						OPEN_ID: app.globalData.OPEN_ID,
-						wxlogin: app.wxlogin
+						OPEN_ID: app.globalData.OPEN_ID
 					})
 				}
 			}
     }
+    console.log('user', app.globalData)
     var sessionId = wx.getStorageSync('sessionId');
     wx.showLoading({
       title: '加载中',
@@ -42,9 +45,11 @@ Page({
     that.setData({
       avatarUrl: wx.getStorageSync('avatarUrl')
     })
-    var retcode = wx.getStorageSync('retcode');
+    let retcode = wx.getStorageSync('retcode');
+		// let staffid = wx.getStorageSync('staffid');
+    let retmessage = wx.getStorageSync('retmessage');
     var courtid = wx.getStorageSync('appCourtid');
-    if (app.wxlogin.retcode == 0 || retcode == 0) {
+    if (retcode == 0) {
       // 调用用户信息接口
       wx.request({
         url: 'https://51jka.com.cn/wxCourt/myInfo',
@@ -85,7 +90,7 @@ Page({
       })
       wx.showModal({
         title: '请注册',
-        content: that.data.wxlogin.retmessage
+        content: retmessage
       })
     }
   },

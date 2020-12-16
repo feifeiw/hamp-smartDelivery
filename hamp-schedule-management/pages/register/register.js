@@ -1,7 +1,6 @@
 // pages/register/register.js
 var app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -12,21 +11,16 @@ Page({
     second: 60,
     getCodeValue: '获取验证码',
     errMsg: '',
-    OPEN_ID: '',
-    globalData: '',
+    isClickCode: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
+    let recode = wx.getStorageSync('recode')
+    // if (recode )
     console.log('globalData信息', app.globalData)
-		that.setData({
-			OPEN_ID: app.globalData.OPEN_ID,
-			globalData: app.globalData,
-			wxlogin: app.wxLogin
-		})
   },
   // 输入姓名
   bindName(e) {
@@ -46,7 +40,7 @@ Page({
   bindCode(e) {
     let val = e.detail.value
 		this.setData({
-			verificationCode: val
+      verificationCode: val
     })
   },
   // 获取验证码
@@ -68,7 +62,12 @@ Page({
         return false
       } 
     }
-		var sessionId = wx.getStorageSync('sessionId')
+    var sessionId = wx.getStorageSync('sessionId')
+    that.setData({
+      isClickCode: false,
+      getCodeValue: '60秒',
+    })
+    that.timer()
 		wx.request({
 			url: 'https://51jka.com.cn/wxCourt/getsms',
 			data: {
@@ -81,12 +80,15 @@ Page({
 			method: 'GET',
 			success: function(res) {
 				if (res.data.result == true) {
-					that.timer()
+					that.setData({errMsg: '验证码发送成功！'})
+          setTimeout(() => {
+            that.setData({errMsg: ''})
+          }, 1000);
 				} else {
-					wx.showModal({
-						title: '',
-						content: res.data.msg
-					})
+          that.setData({errMsg: res.data.msg})
+          setTimeout(() => {
+            that.setData({errMsg: ''})
+          }, 1000);
 				}
 			}
 		})
@@ -103,6 +105,7 @@ Page({
         if (this.data.second <= 0) {
           this.setData({
             second: 60,
+            isClickCode: true,
             getCodeValue: '获取验证码',
           })
           resolve(setTimer)
@@ -118,6 +121,7 @@ Page({
     let that = this
     let formObj = e.detail.value
     let sessionId = wx.getStorageSync('sessionId')
+    console.log(wx.getStorageSync('appCourtid'))
     if (!formObj.phoneNumber || !formObj.name || !formObj.verificationCode) {
       this.setData({errMsg: '请填写完整信息！'})
       setTimeout(() => {
@@ -132,7 +136,7 @@ Page({
     wx.request({
       url: 'https://51jka.com.cn/wxCourt/saveUser',
       data: {
-        wechatid: app.globalData.OPEN_ID,
+        wechatid: wx.getStorageSync('appCourtid'),
         name: formObj.name,
         phone: formObj.phoneNumber,
         gender: '',
@@ -149,7 +153,6 @@ Page({
         console.log('注册返回信息', res)
         if (res.data.result == true) {
           //隐藏loading
-          console.log('注册成功信息', res.data.data)
           wx.hideLoading()
           wx.showModal({
             title: '成功',
@@ -157,8 +160,14 @@ Page({
             showCancel: false,
             success: function(res) {
               if (res.confirm) {
+                that.getUserInfo()
                 wx.switchTab({
-                  url: '/pages/user/user'
+                  url: '/pages/index/index',
+                  success: function(e) {
+                    let page = getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onLoad();
+                  }
                 })
               }
             }
@@ -182,6 +191,63 @@ Page({
           success: function(err) {},
           fail: function(err) {},
           complete: function(err) {},
+        })
+      }
+    })
+  },
+  getUserInfo() {
+    // 调用接口获取openID
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
+    })
+    const openPrams = JSON.parse(wx.getStorageSync('openParams'))
+    wx.login({
+      success: resOne => {
+        wx.request({
+          url: 'https://51jka.com.cn/wxJudge/getOpenid',
+          data: {
+            js_code: resOne.code,
+            grant_type: 'authorization_code',
+            encryptedData: openPrams.encryptedData,
+            iv: openPrams.iv
+          },
+          timeout: 30000,
+          method: 'GET',
+          success: function(res) {
+            wx.hideLoading();
+            // console.log('授权获取openID', res.data)
+            if (!res.data.data) {
+              wx.showToast({
+                title: '接口返回信息错误，请重试',
+                icon: 'none',
+              })
+              wx.setStorageSync('courtid','1')
+              wx.setStorageSync('staffid','410')
+              wx.setStorageSync('retcode', '0')
+            }
+            if (res.data.result) {
+              let jsonObj = JSON.parse(res.data.data); //json字符串转json对象
+              wx.setStorageSync('avatarUrl',jsonObj.avatarUrl)
+              // 存储unionid
+              if (jsonObj.unionId.length > 10) {
+                wx.setStorageSync('appCourtid',jsonObj.unionId)
+                let OPEN_ID = jsonObj.unionId; //获取到的unionId 
+                app.globalData.OPEN_ID = OPEN_ID;
+              }
+            }
+            wx.setStorageSync('courtid',res.data.wxlogin.courtid)
+            wx.setStorageSync('staffid',res.data.wxlogin.staffid)
+            wx.setStorageSync('retcode',res.data.wxlogin.retcode)
+            wx.setStorageSync('retmessage',res.data.wxlogin.retmessage)
+          },
+          fail: function() {
+            wx.hideLoading();
+            wx.showModal({
+              title: '失败',
+              content: '连接服务器失败，请重试',
+            })
+          }
         })
       }
     })

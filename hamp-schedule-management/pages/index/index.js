@@ -12,30 +12,42 @@ Page({
 		Today: '',
 		signeddates: [],
 		heightAuto: false,
-		showArr: []
+		showArr: [],
+		OPEN_ID: ''
   },
   //事件处理函数
-  onLoad: function () {
+  onLoad: function (option) {
 		let that = this
 		//判断是否获取到动态设置的globalData
-		if (app.globalData.userInfo && app.globalData.userInfo != '') {
+		console.log('首页', app.globalData)
+		if (app.globalData.OPEN_ID && app.globalData.OPEN_ID != '') {
 			that.setData({
-				OPEN_ID: app.globalData.OPEN_ID,
-				wxlogin: app.wxlogin
+				OPEN_ID: app.globalData.OPEN_ID
 			})
+			console.log('首页已获取到', that.data)
 		} else {
 			// 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
+			console.log('调用app.js定义callback')
 			app.userInfoLoadCallback = userInfo => {
 				if (userInfo != '') {
 					that.setData({
-						OPEN_ID: app.globalData.OPEN_ID,
-						wxlogin: app.wxlogin
+						OPEN_ID: app.globalData.OPEN_ID
 					})
 				}
 			}
 		}
-		console.log('首页', app.globalData)
+    wx.showLoading({
+		  title: '查询中',
+    })
+		//获取当天日期
 		let today = until.formatTime(new Date());
+		let DATE = that.data.choseDate;
+		let startdate = DATE + ' 00:00';
+		let enddate = DATE + ' 23:59';
+		let retcode = wx.getStorageSync('retcode');
+		let staffid = wx.getStorageSync('staffid');
+		let courtid = wx.getStorageSync('courtid');
+		let retmessage = wx.getStorageSync('retmessage');
 		that.setData({
 			end: DATE,
 			startdate: DATE,
@@ -43,18 +55,8 @@ Page({
 			choseDate: today,
 			Today: today,
 		})
-    wx.showLoading({
-		title: '查询中',
-    })
-    //获取当天日期
-		let DATE = that.data.choseDate;
-		let startdate = DATE + ' 00:00';
-		let enddate = DATE + ' 23:59';
-		let retcode = wx.getStorageSync('retcode');
-		let staffid = wx.getStorageSync('staffid');
-		let courtid = wx.getStorageSync('courtid');
-		console.log(app.wxlogin)
-		if (app.wxlogin.retcode == 0 || retcode == 0) {
+		
+		if (retcode == 0) {
 			wx.request({
 				url: 'https://51jka.com.cn/wxJudge/getschedule',
 				data: {
@@ -84,7 +86,7 @@ Page({
 							icon: 'none',
 							duration: 0,
 							mask: true,
-							success: function(res) {
+							success: function() {
 							}
 						})
 					}
@@ -103,12 +105,13 @@ Page({
 				}
 			})
 		} else {
+			console.log('请注册')
 			wx.navigateTo({
 				url: '/pages/register/register',
 			})
 			wx.showModal({
 				title: '请注册',
-				content: that.data.wxlogin.retmessage
+				content: retmessage
 			})
 		}
 	},
@@ -133,7 +136,6 @@ Page({
 		this.screenShow(this.data.showArr)
 	},
 	screenShow (data) {
-		// console.log(this.data.choseDate)
     const screenData = data.filter(item => {
 			if (item.courttime.substring(0, 10) == this.data.choseDate) {
 				return item

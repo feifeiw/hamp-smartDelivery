@@ -1,5 +1,9 @@
 //app.js
 App({
+  globalData: {
+		userInfo: null,
+		OPEN_ID: ''
+	},
   onLaunch: function () {
     const that = this
     // 展示本地存储能力
@@ -21,10 +25,9 @@ App({
     wx.login({
       success: resOne => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log('登陆', resOne.code)
+        console.log('登陆信息', resOne)
         wx.getSetting({
           success: resTwo => {
-            console.log(resTwo.authSetting)
             if (resTwo.authSetting['scope.userInfo']) {
               // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
               wx.getUserInfo({
@@ -53,23 +56,24 @@ App({
                     timeout: 30000,
                     method: 'GET',
                     success: function(res) {
+                      console.log('openid', res.data)
                       if (res.data.result) {
                         let jsonObj = JSON.parse(res.data.data); //json字符串转json对象
-                        wx.setStorageSync('appCourtid',jsonObj.unionId)
                         wx.setStorageSync('avatarUrl',jsonObj.avatarUrl)
                         if (jsonObj.unionId.length > 10) {
                           wx.hideLoading();
-                          //(原先使用的是openid，后来关联多个小程序时，多个小程序中的openid不相同.所以使用的是unionid) 
+                          //(原先使用的是openid，后来关联多个小程序时，多个小程序中的openid不相同.所以使用的是unionid)
+                          wx.setStorageSync('appCourtid',jsonObj.unionId)
                           let OPEN_ID = jsonObj.unionId; //获取到的unionId 
                           that.globalData.OPEN_ID = OPEN_ID;
                         } else {
                           that.onLaunch();
                         }
                         if (res.data.wxlogin.retcode != 0) {
-                          that.wxlogin.courtid = null;
-                          that.wxlogin.staffid = null;
-                          that.wxlogin.retcode = null;
-                          that.wxlogin.retmessage = '';
+                          wx.setStorageSync('courtid',res.data.wxlogin.courtid)
+                          wx.setStorageSync('staffid',res.data.wxlogin.staffid)
+                          wx.setStorageSync('retcode',res.data.wxlogin.retcode)
+                          wx.setStorageSync('retmessage',res.data.wxlogin.retmessage)
                           wx.navigateTo({
                             url: '/pages/register/register',
                             success: function(res) {},
@@ -85,12 +89,7 @@ App({
                           wx.setStorageSync('staffid',res.data.wxlogin.staffid)
                           wx.setStorageSync('retcode',res.data.wxlogin.retcode)
                           wx.setStorageSync('retmessage',res.data.wxlogin.retmessage)
-                          that.wxlogin.courtid = res.data.wxlogin.courtid;
-                          that.wxlogin.staffid = res.data.wxlogin.staffid;
-                          that.wxlogin.retcode = res.data.wxlogin.retcode;
-                          that.wxlogin.retmessage = res.data.wxlogin.retmessage;
                         }
-                      } else {
                       }
                     },
                     fail: function() {
@@ -116,16 +115,5 @@ App({
         })
       }
     })    
-  },
-
-  globalData: {
-		userInfo: null,
-		OPEN_ID: ''
-	},
-	wxlogin: {
-		courtid: null,
-		staffid: null,
-		retcode: null,
-		retmessage: ''
-	}
+  }
 })

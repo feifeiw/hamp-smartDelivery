@@ -115,7 +115,7 @@ Component({
     },
     // 已经签到处理
     isSigned() {
-      console.log(this.data.signeddates)
+      // console.log(this.data.signeddates)
       const _singleDates = this.data.signeddates
       const _dates = this.data.dates
       _dates.map(item => {
