@@ -17,19 +17,11 @@ App({
 				wx.setStorageSync('sessionId', 'JSESSIONID=' + res.data)
 			}
     })
-    wx.getLocation({
-      type: 'wgs84',
-      success (res) {
-        wx.setStorageSync('latitude', res.latitude)
-        wx.setStorageSync('longitude', res.longitude)
-      }
-    })
     // 登录
     wx.login({
       success: resOne => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log('登陆', resOne.code)
-        // 获取用户信息
         wx.getSetting({
           success: resTwo => {
             console.log(resTwo.authSetting)
@@ -38,12 +30,10 @@ App({
               wx.getUserInfo({
                 success: resThree => {
                   // 可以将 res 发送给后台解码出 unionId
-                  console.log(resThree.userInfo)
+                  console.log('globalData.userInfo', resThree.userInfo)
                   that.globalData.userInfo = resThree.userInfo
-                  // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-                  // 所以此处加入 callback 以防止这种情况
-                  if (that.userInfoReadyCallback) {
-                    that.userInfoReadyCallback(resThree)
+                  if (that.userInfoLoadCallback) {
+                    that.userInfoLoadCallback(resThree.userInfo)
                   }
                   wx.showLoading({
                     title: '加载中',
@@ -64,13 +54,13 @@ App({
                     method: 'GET',
                     success: function(res) {
                       if (res.data.result) {
-                        let jsonObj2 = JSON.parse(res.data.data); //json字符串转json对象
-                        wx.setStorageSync('appCourtid',jsonObj2.unionId)
-                        wx.setStorageSync('avatarUrl',jsonObj2.avatarUrl)
-                        if (jsonObj2.unionId.length > 10) {
+                        let jsonObj = JSON.parse(res.data.data); //json字符串转json对象
+                        wx.setStorageSync('appCourtid',jsonObj.unionId)
+                        wx.setStorageSync('avatarUrl',jsonObj.avatarUrl)
+                        if (jsonObj.unionId.length > 10) {
                           wx.hideLoading();
                           //(原先使用的是openid，后来关联多个小程序时，多个小程序中的openid不相同.所以使用的是unionid) 
-                          let OPEN_ID = jsonObj2.unionId; //获取到的unionId 
+                          let OPEN_ID = jsonObj.unionId; //获取到的unionId 
                           that.globalData.OPEN_ID = OPEN_ID;
                         } else {
                           that.onLaunch();
@@ -87,7 +77,7 @@ App({
                             complete: function(res) {},
                           })
                           wx.showModal({
-                            title: '未绑定微信，不允许登录',
+                            title: '请注册',
                             content: res.data.wxlogin.retmessage
                           })
                         } else {

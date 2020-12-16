@@ -3,8 +3,7 @@
     "pages/index/index",
     "pages/user/user",
     "pages/register/register",
-    "pages/authorization/authorization",
-    "pages/map/map"
+    "pages/authorization/authorization"
   ],
   "window":{
     "backgroundTextStyle":"light",

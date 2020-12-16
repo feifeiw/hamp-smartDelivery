@@ -9,7 +9,7 @@
 }
 
 .top-bar {
-  font-size: 30rpx;
+  font-size: 32rpx;
     height: 60rpx;
     /* line-height: 100rpx; */
     /* border-bottom: 1rpx solid rgba(255, 255, 255, 0.3); */
@@ -37,7 +37,7 @@
 }
 .turning image{
   width: 40rpx;
-  height: 36rpx;
+  height: 34rpx;
   vertical-align: middle;
 }
 .content {

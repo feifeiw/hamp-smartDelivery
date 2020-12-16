@@ -19,19 +19,32 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    if (app.globalData.userInfo && app.globalData.userInfo != '') {
+			that.setData({
+				OPEN_ID: app.globalData.OPEN_ID,
+				wxlogin: app.wxlogin
+			})
+		} else {
+			// 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
+			app.userInfoLoadCallback = userInfo => {
+				if (userInfo != '') {
+					that.setData({
+						OPEN_ID: app.globalData.OPEN_ID,
+						wxlogin: app.wxlogin
+					})
+				}
+			}
+    }
     var sessionId = wx.getStorageSync('sessionId');
     wx.showLoading({
       title: '加载中',
     })
     that.setData({
-      avatarUrl: wx.getStorageSync('avatarUrl'),
-      OPEN_ID: app.globalData.OPEN_ID,
-      wxlogin: app.wxlogin
+      avatarUrl: wx.getStorageSync('avatarUrl')
     })
-
     var retcode = wx.getStorageSync('retcode');
     var courtid = wx.getStorageSync('appCourtid');
-    if (that.data.wxlogin.retcode == 0 || retcode == 0) {
+    if (app.wxlogin.retcode == 0 || retcode == 0) {
       // 调用用户信息接口
       wx.request({
         url: 'https://51jka.com.cn/wxCourt/myInfo',
@@ -68,39 +81,13 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: '../register/register',
+        url: '/pages/register/register',
       })
       wx.showModal({
-        title: '未绑定微信，不允许登录',
+        title: '请注册',
         content: that.data.wxlogin.retmessage
       })
-    }   
-    // if (app.globalData.userInfo) {
-		// 	this.setData({
-		// 		userInfo: app.globalData.userInfo,
-		// 		hasUserInfo: true
-		// 	})
-		// } else if (this.data.canIUse) {
-		// 	// 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-		// 	// 所以此处加入 callback 以防止这种情况
-		// 	app.userInfoReadyCallback = res => {
-		// 		this.setData({
-		// 			userInfo: res.userInfo,
-		// 			hasUserInfo: true
-		// 		})
-		// 	}
-		// } else {
-		// 	// 在没有 open-type=getUserInfo 版本的兼容处理
-		// 	wx.getUserInfo({
-		// 		success: res => {
-		// 			app.globalData.userInfo = res.userInfo
-		// 			this.setData({
-		// 				userInfo: res.userInfo,
-		// 				hasUserInfo: true
-		// 			})
-		// 		}
-		// 	})
-		// }
+    }
   },
 
   /**

@@ -15,7 +15,7 @@
     <view style="top: {{positionTop  + 'rpx'}}" class="days">
       <view class="item" wx:for="{{dates}}" wx:key="*this">
         <view bindtap="selectOne" data-item="{{item}}"
-          class="day {{item.isDay ? 'todays' : ''}} {{(!item.lm)?'nolm' :''}} {{choose==(item.year+'-'+(item.month + 1)+'-'+item.date)?'chosed':''}}">{{item.date}}
+          class="day {{item.isDay ? 'todays' : ''}} {{(!item.lm)?'nolm' :''}} {{showClick==(item.year+'-'+(item.month + 1)+'-'+item.date)?'chosed':''}}">{{item.date}}
         </view>
         <view class="tips">{{item.tips}}</view>
       </view>

@@ -35,10 +35,16 @@ Component({
     monthOpen: true,
     choose: '',
     height: '',
-    Today: ''
+    Today: '',
+    showClick: ''
   },
   methods: {
     stratLoad() {
+      this.getToDay()
+      this.getWeek()
+      this.isSigned()
+    },
+    getToDay() {
       const dataArr = this.monthDay(this.data.y, this.data.m)
       dataArr.map(item => {
         const _day = `${item.year}-${item.month + 1}-${item.date}`
@@ -47,11 +53,8 @@ Component({
         }
       })
       this.setData({
-        dates: dataArr,
-        signeddates: this.data.signeddates
+        dates: dataArr
       })
-      this.getWeek()
-      this.isSigned()
     },
     getWeek () {
       // 2
@@ -144,14 +147,15 @@ Component({
     selectOne(e) {
       const i = e.currentTarget.dataset.item
       let date = [i.year, i.month+1, i.date].map(this.formatNumber).join('-')
-      // let date = `${i.year}-${i.month + 1}-${i.date}`
+      let _dateShow = `${i.year}-${i.month + 1}-${i.date}`
       let selectD = new Date(date)
       if (selectD.getMonth() != this.data.m) {
         console.log('不在可选范围内')
         return false
       }
       this.setData({
-        choose: date
+        choose: date,
+        showClick: _dateShow
       })
       this.triggerEvent('onClick', date)
     },
@@ -182,11 +186,11 @@ Component({
           })
         }
       }
-      that.setData({
-        dates: that.monthDay(that.data.y, that.data.m)
-      })
+      // that.setData({
+      //   dates: that.monthDay(that.data.y, that.data.m)
+      // })
+      this.getToDay()
       this.isSigned()
-      // this.triggerEvent('change', this.data.dates)
     }
   }
 })

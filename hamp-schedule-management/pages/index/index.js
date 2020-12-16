@@ -16,48 +16,45 @@ Page({
   },
   //事件处理函数
   onLoad: function () {
-	let that = this
-	if (app.globalData.userInfo && app.globalData.userInfo != '') {
-		that.setData({
-			OPEN_ID: app.globalData.OPEN_ID,
-			wxlogin: app.wxlogin
-		})
-	} else {
-		// 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
-		app.testDataCallback = data => {
-			if (data != '') {
-				that.setData({
-					OPEN_ID: app.globalData.OPEN_ID,
-					wxlogin: app.wxlogin
-				})
+		let that = this
+		//判断是否获取到动态设置的globalData
+		if (app.globalData.userInfo && app.globalData.userInfo != '') {
+			that.setData({
+				OPEN_ID: app.globalData.OPEN_ID,
+				wxlogin: app.wxlogin
+			})
+		} else {
+			// 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
+			app.userInfoLoadCallback = userInfo => {
+				if (userInfo != '') {
+					that.setData({
+						OPEN_ID: app.globalData.OPEN_ID,
+						wxlogin: app.wxlogin
+					})
+				}
 			}
 		}
-	}
-		
-	let today = until.formatTime(new Date());
-	that.setData({
-		// OPEN_ID: app.globalData.OPEN_ID,
-		end: DATE,
-		startdate: DATE,
-		enddate: DATE,
-		// wxlogin: app.wxlogin,
-		choseDate: today,
-		Today: today,
-		markDays: [today]
-	})
+		console.log('首页', app.globalData)
+		let today = until.formatTime(new Date());
+		that.setData({
+			end: DATE,
+			startdate: DATE,
+			enddate: DATE,
+			choseDate: today,
+			Today: today,
+		})
     wx.showLoading({
 		title: '查询中',
     })
     //获取当天日期
-	var DATE = that.data.choseDate;
-	//查询当天
-	var startdate = DATE + ' 00:00';
-	var enddate = DATE + ' 23:59';
-	var retcode = wx.getStorageSync('retcode');
-	var staffid = wx.getStorageSync('staffid');
-	var courtid = wx.getStorageSync('courtid');
-    var retmessage = wx.getStorageSync('retmessage');
-		if (that.data.wxlogin.retcode == 0 || retcode == 0) {
+		let DATE = that.data.choseDate;
+		let startdate = DATE + ' 00:00';
+		let enddate = DATE + ' 23:59';
+		let retcode = wx.getStorageSync('retcode');
+		let staffid = wx.getStorageSync('staffid');
+		let courtid = wx.getStorageSync('courtid');
+		console.log(app.wxlogin)
+		if (app.wxlogin.retcode == 0 || retcode == 0) {
 			wx.request({
 				url: 'https://51jka.com.cn/wxJudge/getschedule',
 				data: {
@@ -107,10 +104,10 @@ Page({
 			})
 		} else {
 			wx.navigateTo({
-				url: '../user/user',
+				url: '/pages/register/register',
 			})
 			wx.showModal({
-				title: '未绑定微信，不允许登录',
+				title: '请注册',
 				content: that.data.wxlogin.retmessage
 			})
 		}

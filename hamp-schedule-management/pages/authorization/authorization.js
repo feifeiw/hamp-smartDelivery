@@ -53,100 +53,101 @@ Page({
 				userInfo: e.detail.userInfo,
 				hasUserInfo: true
 			});
-			wx.login({
-				success: res1 => {
-					wx.getSetting({
-						success: res2 => {
-							if (res2.authSetting['scope.userInfo']) {
-								// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-								wx.getUserInfo({
-									success: loginres => {
-										console.log("loginres", loginres)
-										that.data.globalData.userInfo = loginres.userInfo
-										// 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-										// 所以此处加入 callback 以防止这种情况
-										if (that.userInfoReadyCallback) {
-											that.userInfoReadyCallback(loginres)
-										}
-										wx.showLoading({
-											title: '加载中',
-											mask: true,
-											success: function(res1) {},
-											fail: function(res1) {},
-											complete: function(res1) {},
-										})
-										wx.request({
-											url: 'https://51jka.com.cn/wxJudge/getOpenid',
-											data: {
-												js_code: res1.code,
-												grant_type: 'authorization_code',
-												encryptedData: loginres.encryptedData,
-												iv: loginres.iv
-											},
-											timeout: 30000,
-											method: 'GET',
-											success: function(res) {
-												if (res.data.result) {
-													let jsonObj = res.data.data; //json字符串
-													let jsonObj2 = JSON.parse(jsonObj); //json字符串转json对象
-													if (jsonObj2.unionId.length > 10) {
-														wx.hideLoading();
-														//(原先使用的是openid，后来关联多个小程序时，多个小程序中的openid不相同.所以使用的是unionid) 
-														let OPEN_ID = jsonObj2.unionId; //获取到的unionId 
-														that.data.globalData.OPEN_ID = OPEN_ID;
-													} else {
-														that.onLaunch();
-													}
-													console.log(res.data.wxlogin.retcode)
-													if (res.data.wxlogin.retcode != 0) {
-														that.data.wxlogin.courtid = null;
-														that.data.wxlogin.staffid = null;
-														that.data.wxlogin.retcode = null;
-														that.data.wxlogin.retmessage = '';
-														wx.navigateTo({
-															url: '/pages/register/register',
-															success: function(res) {},
-															fail: function(res) {},
-															complete: function(res) {},
-														})
-														wx.showModal({
-															title: '未绑定微信，不允许登录',
-															content: res.data.wxlogin.retmessage
-														})
-													} else {
-														that.data.wxlogin.courtid = res.data.wxlogin.courtid;
-														that.data.wxlogin.staffid = res.data.wxlogin.staffid;
-														that.data.wxlogin.retcode = res.data.wxlogin.retcode;
-														that.data.wxlogin.retmessage = res.data.wxlogin.retmessage;
-													}
-												} else {
-												}
-											},
-											fail: function() {
-												wx.showModal({
-													title: '失败',
-													content: '连接服务器失败',
-												})
-											}
-										})
-									}
-								})
-							} else {
-								wx.navigateTo({
-									url: '/pages/authorization/authorization',
-								})
-								wx.showModal({
-									title: '未授权，请先授权',
-									content: "未授权，请先授权"
-								})
-							}
-						}
-					})
-				}
-			});
-			wx.switchTab({
-				url: '/pages/home/home'
-			})
+			// wx.login({
+			// 	success: res1 => {
+			// 		wx.getSetting({
+			// 			success: res2 => {
+			// 				if (res2.authSetting['scope.userInfo']) {
+			// 					// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+			// 					wx.getUserInfo({
+			// 						success: loginres => {
+			// 							console.log("loginres", loginres)
+			// 							// that.setData({
+			// 							// 	globalData : app.globalData,
+			// 							// })
+			// 							that.data.globalData.userInfo = loginres.userInfo
+			// 							if (that.userInfoLoadCallback){
+			// 								that.userInfoLoadCallback(loginres.userInfo)
+			// 						 }
+			// 							wx.showLoading({
+			// 								title: '加载中',
+			// 								mask: true,
+			// 								success: function(res1) {},
+			// 								fail: function(res1) {},
+			// 								complete: function(res1) {},
+			// 							})
+			// 							wx.request({
+			// 								url: 'https://51jka.com.cn/wxJudge/getOpenid',
+			// 								data: {
+			// 									js_code: res1.code,
+			// 									grant_type: 'authorization_code',
+			// 									encryptedData: loginres.encryptedData,
+			// 									iv: loginres.iv
+			// 								},
+			// 								timeout: 30000,
+			// 								method: 'GET',
+			// 								success: function(res) {
+			// 									if (res.data.result) {
+			// 										let jsonObj = res.data.data; //json字符串
+			// 										let jsonObj2 = JSON.parse(jsonObj); //json字符串转json对象
+			// 										if (jsonObj2.unionId.length > 10) {
+			// 											wx.hideLoading();
+			// 											//(原先使用的是openid，后来关联多个小程序时，多个小程序中的openid不相同.所以使用的是unionid) 
+			// 											let OPEN_ID = jsonObj2.unionId; //获取到的unionId 
+			// 											that.data.globalData.OPEN_ID = OPEN_ID;
+			// 										} else {
+			// 											that.onLaunch();
+			// 										}
+			// 										console.log(res.data.wxlogin.retcode)
+			// 										if (res.data.wxlogin.retcode != 0) {
+			// 											that.data.wxlogin.courtid = null;
+			// 											that.data.wxlogin.staffid = null;
+			// 											that.data.wxlogin.retcode = null;
+			// 											that.data.wxlogin.retmessage = '';
+			// 											wx.navigateTo({
+			// 												url: '/pages/register/register',
+			// 												success: function(res) {},
+			// 												fail: function(res) {},
+			// 												complete: function(res) {},
+			// 											})
+			// 											wx.showModal({
+			// 												title: '请注册',
+			// 												content: res.data.wxlogin.retmessage
+			// 											})
+			// 										} else {
+			// 											that.data.wxlogin.courtid = res.data.wxlogin.courtid;
+			// 											that.data.wxlogin.staffid = res.data.wxlogin.staffid;
+			// 											that.data.wxlogin.retcode = res.data.wxlogin.retcode;
+			// 											that.data.wxlogin.retmessage = res.data.wxlogin.retmessage;
+			// 										}
+			// 									} else {
+			// 									}
+			// 								},
+			// 								fail: function() {
+			// 									wx.showModal({
+			// 										title: '失败',
+			// 										content: '连接服务器失败',
+			// 									})
+			// 								}
+			// 							})
+			// 						}
+			// 					})
+			// 				} else {
+			// 					wx.navigateTo({
+			// 						url: '/pages/authorization/authorization',
+			// 					})
+			// 					wx.showModal({
+			// 						title: '未授权，请先授权',
+			// 						content: "未授权，请先授权"
+			// 					})
+			// 				}
+			// 			}
+			// 		})
+			// 	}
+			// });
+			// wx.navigateTo({
+			// 	url: '/pages/index/index?pageForm='
+			// })
 		} else {
 			//用户按了拒绝按钮
 			wx.showModal({

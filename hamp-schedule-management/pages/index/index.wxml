@@ -6,13 +6,12 @@
   </view>
   <!-- 日程 -->
   <view class="dateNote {{heightAuto?'heightAuto':''}}">
-    <view style="position: relative;padding-top: 150rpx;height:100%;">
+    <view class="dateContent">
       <view class="choseDate">
         <view class="arrow {{heightAuto?'heightAuto':''}}" bindtap="arrowClick" data-flag="{{heightAuto}}"><image src="../../static/image/arrow_down.png" class=""></image></view>
         <text class="day">{{choseDate}}</text>
       </view>
       <view class="noteUl">
-        <!--  -->
         <view class="noteLi" wx:for="{{dataArr}}" wx:key="caseid">
           <text style="color:#000;font-weight:blod;">案号：{{item.caseno}}</text>
           <view class="noteLi_block">

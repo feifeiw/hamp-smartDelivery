@@ -3,12 +3,12 @@
 <view class="regiester">
   <view class="tips">未查询到注册信息，清先注册</view>
   <form bindsubmit="registerSubmit" class="regiester_form">
-    <view><input name="name" value="{{name}}" placeholder="请输入真实姓名" /></view>
+    <view><input name="name" value="{{name}}" placeholder="请输入真实姓名" bindtap="bindName" /></view>
     <view class="regiester_item" style="position:realtive;z-index:9;">
-      <input name="phone" value="{{phone}}" placeholder="请输入手机号码" bindinput='bindPhoneInput' />
+      <input name="phoneNumber" value="{{phoneNumber}}" placeholder="请输入手机号码" bindinput='bindPhoneInput' />
       <text class="code" bindtap="getCode" style="z-index:999;position:realtive;">{{getCodeValue}}</text>
     </view>
-    <view><input name="code" placeholder="请输入验证码" /></view>
+    <view><input name="verificationCode" value="{{verificationCode}}" placeholder="请输入验证码" bindtap="bindCode" /></view>
     <view class="errMsg" wx:if="{{errMsg !== ''}}">
       <text class="msgSpan">{{errMsg}}</text>
     </view>

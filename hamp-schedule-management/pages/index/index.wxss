@@ -23,9 +23,10 @@
 }
 .dateNote{
   width: 750rpx;
-  height: 605rpx;
+  min-height: 605rpx;
+  height: calc(100% - 520rpx);
   background: #fff;
-  box-shadow: 4px 1px 0 0 rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.06);
   position: fixed;
   left: 0;
   bottom: 0;
@@ -36,8 +37,15 @@
   transition: width 2s; 
   -webkit-transition: width 2s;
 }
+.dateContent{
+  position: relative;
+  z-index:9999;
+  padding-top: 130rpx;
+  height:100%;
+  background: #fff;
+}
 .choseDate{
-  padding: 0 40rpx;
+  padding: 0 30rpx;
   box-sizing: border-box;
   border-bottom: 1px solid #eee;
   position:absolute;
@@ -48,7 +56,7 @@
   background: #fff;
 }
 .day{
-  height: 70rpx;
+  height: 55rpx;
   display: inline-block;
 }
 .arrow{
@@ -59,27 +67,28 @@
 .arrow image{
   width: 40rpx;
   height: 40rpx;
+  transform: rotate(180deg);
 }
 .noteUl{
   min-height: 450rpx;
   height: calc(100% - 100rpx);
   position: relative;
   z-index: 9;
-  padding: 18rpx 40rpx;
+  padding: 18rpx 30rpx;
   width: 100%;
   box-sizing: border-box;
-  font-size: 32rpx;
+  font-size: 28rpx;
   overflow-y: auto;
 }
 .noteLi{
   background: #f4f4f4;
   border-radius: 6rpx;
-  padding: 20rpx 40rpx;
+  padding: 20rpx 30rpx;
   width: 100%;
   color: #999;
-  line-height: 60rpx;
+  line-height: 50rpx;
   box-sizing: border-box;
-  margin-bottom: 20rpx;
+  margin-bottom: 14rpx;
 }
 .noteLi_block{
   width: 100%;
@@ -88,5 +97,5 @@
 .heightAuto image{
   transition: width 2s; 
   -webkit-transition: width 2s;
-  transform: rotate(180deg);
+  transform: rotate(0deg) !important;
 }
