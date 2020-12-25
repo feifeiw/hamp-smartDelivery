@@ -15,19 +15,20 @@ Page({
 						if (res.authSetting['scope.userInfo']) {
 								wx.getUserInfo({
 										success: function(res) {
-												// 用户已经授权过,不需要显示授权页面,所以不需要改变isHide 的值
-												// 根据自己的需求有其他操作再补充
+												// 用户已经授权过,不需要显示授权页面,所以不需要改变isHide 的值,直接跳转首页
 												wx.login({
 														success: res => {
 																// 获取到用户的 code 之后：res.code
 																console.log("用户的code:" + res.code);
 														}
 												});
+												wx.switchTab({
+													url: '/pages/index/index',
+												})
 										}
 								});
 						} else {
 								// 用户没有授权
-								// 改变 isHide 的值，显示授权页面
 								that.setData({
 									isHide: true,
 									OPEN_ID: app.globalData.OPEN_ID,
@@ -40,112 +41,83 @@ Page({
 	},
 
 	bindGetUserInfo: function(e) {
+		const params = {
+			encryptedData: e.detail.encryptedData,
+			iv: e.detail.iv
+		}
+		wx.setStorageSync('openParams', JSON.stringify(params))
+		console.log("用户的信息如下：", e);
 		if (e.detail.userInfo) {
 			//用户按了允许授权按钮
 			var that = this;
 			app.globalData.userInfo = e.detail.userInfo
-			// 获取到用户的信息了，打印到控制台上看下
-			console.log("用户的信息如下：");
-			console.log(e.detail.userInfo);
-			//授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
 			that.setData({
 				isHide: false,
 				userInfo: e.detail.userInfo,
-				hasUserInfo: true
 			});
+			// 调用接口获取openID
+			wx.showLoading({
+				title: '授权中',
+				mask: true,
+			})
 			wx.login({
-				success: res1 => {
-					wx.getSetting({
-						success: res2 => {
-							if (res2.authSetting['scope.userInfo']) {
-								// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-								wx.getUserInfo({
-									success: loginres => {
-										console.log("loginres", loginres)
-										that.data.globalData.userInfo = loginres.userInfo
-										// 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-										// 所以此处加入 callback 以防止这种情况
-										if (that.userInfoReadyCallback) {
-											that.userInfoReadyCallback(loginres)
-										}
-										wx.showLoading({
-											title: '加载中',
-											mask: true,
-											success: function(res1) {},
-											fail: function(res1) {},
-											complete: function(res1) {},
-										})
-										wx.request({
-											url: 'https://51jka.com.cn/wxJudge/getOpenid',
-											data: {
-												js_code: res1.code,
-												grant_type: 'authorization_code',
-												encryptedData: loginres.encryptedData,
-												iv: loginres.iv
-											},
-											timeout: 30000,
-											method: 'GET',
-											success: function(res) {
-												if (res.data.result) {
-													let jsonObj = res.data.data; //json字符串
-													let jsonObj2 = JSON.parse(jsonObj); //json字符串转json对象
-													if (jsonObj2.unionId.length > 10) {
-														wx.hideLoading();
-														//(原先使用的是openid，后来关联多个小程序时，多个小程序中的openid不相同.所以使用的是unionid) 
-														let OPEN_ID = jsonObj2.unionId; //获取到的unionId 
-														that.data.globalData.OPEN_ID = OPEN_ID;
-													} else {
-														that.onLaunch();
-													}
-													console.log(res.data.wxlogin.retcode)
-													if (res.data.wxlogin.retcode != 0) {
-														that.data.wxlogin.courtid = null;
-														that.data.wxlogin.staffid = null;
-														that.data.wxlogin.retcode = null;
-														that.data.wxlogin.retmessage = '';
-														wx.navigateTo({
-															url: '/pages/register/register',
-															success: function(res) {},
-															fail: function(res) {},
-															complete: function(res) {},
-														})
-														wx.showModal({
-															title: '未绑定微信，不允许登录',
-															content: res.data.wxlogin.retmessage
-														})
-													} else {
-														that.data.wxlogin.courtid = res.data.wxlogin.courtid;
-														that.data.wxlogin.staffid = res.data.wxlogin.staffid;
-														that.data.wxlogin.retcode = res.data.wxlogin.retcode;
-														that.data.wxlogin.retmessage = res.data.wxlogin.retmessage;
-													}
-												} else {
-												}
-											},
-											fail: function() {
-												wx.showModal({
-													title: '失败',
-													content: '连接服务器失败',
-												})
-											}
-										})
-									}
+				success: resOne => {
+					wx.request({
+						url: 'https://51jka.com.cn/wxJudge/getOpenid',
+						data: {
+							js_code: resOne.code,
+							grant_type: 'authorization_code',
+							encryptedData: e.detail.encryptedData,
+							iv: e.detail.iv
+						},
+						timeout: 30000,
+						method: 'GET',
+						success: function(res) {
+							wx.hideLoading();
+							// console.log('授权获取openID', res.data)
+							if (!res.data.data) {
+								wx.showToast({
+									title: '接口返回信息错误，请重试',
+									icon: 'none',
 								})
-							} else {
-								wx.navigateTo({
-									url: '/pages/authorization/authorization',
+								that.setData({
+									isHide: true,
 								})
-								wx.showModal({
-									title: '未授权，请先授权',
-									content: "未授权，请先授权"
-								})
+								return
 							}
+							if (res.data.result) {
+								let jsonObj = JSON.parse(res.data.data); //json字符串转json对象
+								wx.setStorageSync('avatarUrl',jsonObj.avatarUrl)
+								// 存储unionid
+								if (jsonObj.unionId.length > 10) {
+									wx.setStorageSync('appCourtid',jsonObj.unionId)
+									let OPEN_ID = jsonObj.unionId; //获取到的unionId 
+									app.globalData.OPEN_ID = OPEN_ID;
+								}
+							}
+							wx.setStorageSync('courtid',res.data.wxlogin.courtid)
+							wx.setStorageSync('staffid',res.data.wxlogin.staffid)
+							wx.setStorageSync('retcode',res.data.wxlogin.retcode)
+							wx.setStorageSync('retmessage',res.data.wxlogin.retmessage)
+							// 跳转首页并onLoad
+							wx.switchTab({
+								url: '/pages/index/index',
+								success: function(e) {
+									let page = getCurrentPages().pop();
+									if (page == undefined || page == null) return;
+									page.onLoad();
+								}
+							})
+						},
+						fail: function() {
+							wx.hideLoading();
+							wx.showModal({
+								title: '失败',
+								content: '连接服务器失败，请重试',
+							})
 						}
 					})
 				}
-			});
-			wx.switchTab({
-				url: '/pages/home/home'
 			})
 		} else {
 			//用户按了拒绝按钮

@@ -12,7 +12,6 @@
 }
 input{
   width: 630rpx;
-  background: #f5f5f5;
   font-size: 34rpx;
   height: 100rpx;
   line-height: 100rpx;
@@ -27,22 +26,30 @@ input{
   display: inline-block;
   position:relative;
 }
-.regiester_item{
+.form_item{
+  width: 630rpx;
   position: relative;
+  z-index:9;
+  background: #f5f5f5;
+}
+.phoneNumber{
+  width: 400rpx;
 }
 .code{
   position: absolute;
+  z-index:999;
   right: 28rpx;
   top: 0;
   font-size: 34rpx;
+  z-index: 99;
   color: #5275f5;
-  padding: 26rpx 10rpx;
+  padding: 26rpx 15rpx;
 }
 .errMsg{
   width:100%;
   position:absolute;
   left: 0;
-  top: 340rpx;
+  top: 360rpx;
   text-align:center;
 }
 .msgSpan{

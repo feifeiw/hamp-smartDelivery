@@ -1,7 +1,7 @@
 /* pages/files/files.wxss */
 .IndexWrapper{
   width: 750rpx;
-  height: 1000rpx;
+  min-height: 1000rpx;
   background: #f9f9f9;
   position: relative;
 }
@@ -67,7 +67,7 @@
   border-radius: 30rpx;
 }
 .tabList{
-  padding-top: 120rpx;
+  padding: 200rpx 0 100rpx 0;
   display: inline-block;
   width: 100%;
 }
@@ -76,7 +76,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 20rpx 30rpx;
-  margin-bottom: 30rpx;
+  margin-bottom: 20rpx;
   font-size: 30rpx;
   color: #333;
   line-height: 56rpx;
@@ -89,4 +89,10 @@
   margin-top: 180rpx;
   font-size: 34rpx;
   color: #999;
+}
+.uploadMsg{
+  text-align: center;
+  font-size: 34rpx;
+  color: #999;
+  padding: 30rpx;
 }

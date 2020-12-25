@@ -3,16 +3,16 @@
   <view class="topInfo">
     <!-- 用户信息 -->
     <view class="user">
-      <image class="userImg" src="{{userInfo.avatarUrl}}"></image>
-      <view class="text-center font4" style="margin:100rpx 0 30rpx 0;">{{userInfo.nickName}}</view>
-      <view class="text-center font3">组织：</view>
+      <image class="userImg" src="{{avatarUrl}}"></image>
+      <view class="text-center font4" style="margin:100rpx 0 30rpx 0;">{{userList.staffname}}</view>
+      <view class="text-center font3">组织：{{userList.courtname}}</view>
     </view>
   </view>
   <!-- 列表 -->
   <view class="userList">
-    <view class="userLi"><text>部门</text><text class="text-gray">menber</text></view>
-    <view class="userLi"><text>姓名</text><text class="text-gray">{{userInfo.nickName}}</text></view>
-    <view class="userLi"><text>手机号</text><text class="text-gray">nber</text></view>
-    <view class="userLi"><text>座机号</text><text class="text-gray">menber</text></view>
+    <view class="userLi"><text>部门</text><text class="text-gray">{{userList.courtname}}</text></view>
+    <view class="userLi"><text>姓名</text><text class="text-gray">{{userList.staffname}}</text></view>
+    <view class="userLi"><text>手机号</text><text class="text-gray">{{userList.mobile}}</text></view>
+    <view class="userLi"><text>座机号</text><text class="text-gray">无</text></view>
   </view>
 </view>

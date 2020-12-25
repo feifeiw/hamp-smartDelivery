@@ -23,10 +23,25 @@ Page({
     wx.scanCode({
       onlyFromCamera: true,
       success(res) {
-        console.log('扫码结果', res)
-        wx.navigateTo({
-          url: '/pages/files/files',
-        })
+        if (res.result) {
+          wx.showModal({
+            title: '',
+            content: '扫码签收成功！',
+            showCancel: false,
+            success (res) {
+              if (res.confirm) {
+                wx.switchTab({
+                  url: '/pages/files/files',
+                })
+              }
+            }
+          })
+        } else {
+          wx.showModal({
+            title: '失败',
+            content: '扫码失败，请重试',
+          })
+        }
       }
     })
   },
