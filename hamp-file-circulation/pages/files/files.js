@@ -10,13 +10,14 @@ Page({
   data: {
     tabs: ["每日签收", "每日转出", "当前持有"],
     activeIndex: 0,
-    dateStart: '',//默认起始时间  
-    dateEnd: '',//默认结束时间 
+    dateStart: '', // 默认起始时间  
+    dateEnd: '', // 默认结束时间 
     dataArr: [], // 列表
     signInData: [], // 每日签收
     rollOutData: [], // 每日转出
 		holdData: [], // 当前持有
 		updateLoadText: '上拉加载更多',
+		uploadFlag: true,
 		pageNum: 1,
 		paddTop: '100'
   },
@@ -25,8 +26,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-	that = this;
-	that.clearCache() //清本页缓存
+		that = this;
+		that.clearCache() //清本页缓存
     let time = until.formatTime(new Date())
     this.setData({
       OPEN_ID: app.globalData.OPEN_ID,
@@ -41,6 +42,7 @@ Page({
 		that.setData({
 			dataArr: [],
 			updateLoadText: '上拉加载更多',
+			uploadFlag: true,
 			pageNum: 1
     });
     if (nowIndex == 0) {
@@ -59,6 +61,7 @@ Page({
 			activeIndex: 0,
 			dataArr: [],
 			updateLoadText: '上拉加载更多',
+			uploadFlag: true,
 			pageNum: 1
 	  })
   },
@@ -81,6 +84,7 @@ Page({
       activeIndex: e.currentTarget.id,
 			dataArr: [],
 			updateLoadText: '上拉加载更多',
+			uploadFlag: true,
 			pageNum: 1
     });
     if (tabIndex == 0) {
@@ -120,6 +124,7 @@ Page({
 						wx.hideLoading();
 					} else {
 						that.setData({
+							uploadFlag: false,
               updateLoadText: '没有更多数据了~'
 						})
 						wx.hideLoading();
@@ -181,6 +186,7 @@ Page({
 						wx.hideLoading();
 					} else {
 						that.setData({
+							uploadFlag: false,
               updateLoadText: '没有更多数据了~'
 						})
 						wx.hideLoading();
@@ -239,6 +245,7 @@ Page({
 						//隐藏loading
 						wx.hideLoading();
 						that.setData({
+							uploadFlag: false,
               updateLoadText: '没有更多数据了~'
 						})
 					}
@@ -308,7 +315,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-		console.log("上拉加载")
+		if (!that.data.uploadFlag) return
 		const num = that.data.pageNum + 1
 		that.setData({
 			updateLoadText: '正在加载....',

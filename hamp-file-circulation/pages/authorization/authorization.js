@@ -23,7 +23,7 @@ Page({
 														}
 												});
 												wx.switchTab({
-													url: '/pages/index/index',
+													url: '/pages/signFor/signFor',
 												})
 										}
 								});
@@ -63,7 +63,7 @@ Page({
 			wx.login({
 				success: resOne => {
 					wx.request({
-						url: 'https://51jka.com.cn/wxJudge/getOpenid',
+						url: 'https://51jka.com.cn/wxCirculation/getOpenid',
 						data: {
 							js_code: resOne.code,
 							grant_type: 'authorization_code',
@@ -101,7 +101,7 @@ Page({
 							wx.setStorageSync('retmessage',res.data.wxlogin.retmessage)
 							// 跳转首页并onLoad
 							wx.switchTab({
-								url: '/pages/index/index',
+								url: '/pages/signFor/signFor',
 								success: function(e) {
 									let page = getCurrentPages().pop();
 									if (page == undefined || page == null) return;

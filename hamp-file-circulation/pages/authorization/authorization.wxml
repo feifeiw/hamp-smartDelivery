@@ -2,7 +2,7 @@
 <view wx:if="{{isHide}}">
     <view wx:if="{{canIUse}}" >
         <view class='header'>
-            <image src='/static/image/richenganpai.png'></image>
+            <image src='/static/image/juanzongjiuzhuan.png'></image>
         </view>
  
         <view class='content'>

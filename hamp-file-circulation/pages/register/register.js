@@ -205,7 +205,7 @@ Page({
     wx.login({
       success: resOne => {
         wx.request({
-          url: 'https://51jka.com.cn/wxJudge/getOpenid',
+          url: 'https://51jka.com.cn/wxCirculation/getOpenid',
           data: {
             js_code: resOne.code,
             grant_type: 'authorization_code',
