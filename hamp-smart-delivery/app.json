@@ -16,7 +16,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "汉普日程助理",
+    "navigationBarTitleText": "汉普智慧送达",
     "navigationBarTextStyle":"black"
   },
   "tabBar": {

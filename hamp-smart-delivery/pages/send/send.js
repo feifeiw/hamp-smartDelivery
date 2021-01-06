@@ -30,8 +30,8 @@ Page({
 				wx.showLoading({
 					title: '识别中',
         })
-        var retcode = wx.getStorageSync('retcode');
-        if (that.data.wxlogin.retcode == 0  || retcode == 0) {
+        let retcode = wx.getStorageSync('retcode');
+        if (retcode == 0) {
           wx.request({
             url: 'https://51jka.com.cn/wxCourt/getDelivery',
             data: {

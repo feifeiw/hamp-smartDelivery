@@ -2,6 +2,7 @@
 var QQMapWX = require('../../utils/qqmap-wx-jssdk');
 var qqmapsdk;
 const app = getApp();
+let that = this;
 Page({
   /**
    * 页面的初始数据
@@ -39,14 +40,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
+    that = this;
 		//案件id
-		var retcode = wx.getStorageSync('retcode');
-		var staffid = wx.getStorageSync('staffid');
-		var courtid = wx.getStorageSync('courtid');
-		var retmessage = wx.getStorageSync('retmessage');
+		let retcode = wx.getStorageSync('retcode');
+		let staffid = wx.getStorageSync('staffid');
+		let courtid = wx.getStorageSync('courtid');
+		let retmessage = wx.getStorageSync('retmessage');
 		// var msg = options.msg; //接收到的参数    str为上个页面传递的key值
-		var msgData = wx.getStorageSync('sendCaseInfo');
+		let msgData = wx.getStorageSync('sendCaseInfo');
 		console.log(msgData)
 		that.setData({
 			OPEN_ID: app.globalData.OPEN_ID,

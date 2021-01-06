@@ -1,5 +1,6 @@
 // pages/sendSuccess/sendSuccess.js
 const app = getApp();
+let that = this;
 Page({
   /**
    * 页面的初始数据
@@ -31,13 +32,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
+    that = this;
 		//案件id
-		var retcode = wx.getStorageSync('retcode');
-		var staffid = wx.getStorageSync('staffid');
-		var courtid = wx.getStorageSync('courtid');
-		var retmessage = wx.getStorageSync('retmessage');
-		var msgData = wx.getStorageSync('sendCaseInfo');
+		let retcode = wx.getStorageSync('retcode');
+		let staffid = wx.getStorageSync('staffid');
+		let courtid = wx.getStorageSync('courtid');
+		let retmessage = wx.getStorageSync('retmessage');
+		let msgData = wx.getStorageSync('sendCaseInfo');
 		console.log(msgData)
 		that.setData({
 			OPEN_ID: app.globalData.OPEN_ID,

@@ -15,10 +15,15 @@
                 <view class="tabLi">
                     <view>案号：<text>{{item.caseno}}</text></view>
                     <view>送达事件：<text>{{item.eventname}}</text></view>
-                    <view>送达发起日期：<text>{{item.startdate}}</text></view>
-                    <view>送达结束日期：<text>{{item.enddate}}</text></view>
-                    <view>送达时间：<text>{{item.sendTime}}</text></view>
+                    <view wx:if="{{activeIndex != 1}}">送达时间：<text>{{item.startdate}}</text></view>
+                    <view wx:if="{{activeIndex == 1}}">送达发起日期：<text>{{item.startdate}}</text></view>
+                    <view wx:if="{{activeIndex != 0}}">送达结束日期：<text>{{item.enddate}}</text></view>
+                    <view>接收地址：<text>{{item.receiveaddr}}</text></view>
+                    <view>接收人：<text>{{item.receiver || null}}</text></view>
                 </view>
+            </block>
+            <block wx:if="{{dataArr.length >= 10}}">
+                <view class="uploadMsg">{{updateLoadText}}</view>
             </block>
         </view>
         <view wx:else class="noMsg">
