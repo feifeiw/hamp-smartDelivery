@@ -37,7 +37,15 @@
   </view>
   <!-- 按钮 -->
   <view class="caseFooter">
-    <view class="btn-primary button" bindtap="returnBackSing">确认签收</view>
-    <view class="btn-default button" bindtap="returnBackSing">取消</view>
+    <view class="message">
+      <view><label>送达接收人信息</label></view>
+      <view><label>接收人姓名：</label><text>{{dataArr.receiver}}</text></view>
+      <view><label>地址：</label><text>{{dataArr.deliveraddr}}</text></view>
+      <view><label>联系电话：</label><text>{{dataArr.phoneno}}</text></view>
+    </view>
+    <view>
+      <view class="btn-primary button" bindtap="returnBackSing">确认签收</view>
+      <view class="btn-default button" bindtap="returnBackSing">取消</view>
+    </view>
   </view>
 </view>

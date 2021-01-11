@@ -12,7 +12,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
   startScanCode(e){
     var that = this
@@ -43,7 +43,7 @@ Page({
               console.log('扫码结果', res.data.data)
               if (res.data.result == true) {
                 var data = JSON.stringify(res.data.data)
-                // wx.setStorageSync('caseData', res.data.data),
+                wx.setStorageSync('test',data)
                 wx.navigateTo({
                   url: '../caseInformation/caseInformation?data=' + data
                 })

@@ -26,7 +26,8 @@ Page({
       onlyFromCamera: true,
       success(res) {
         console.log('扫码结果', res)
-        var barcode = res.result
+        let barcode = res.result
+        wx.setStorageSync('barcode', barcode)
 				wx.showLoading({
 					title: '识别中',
         })
@@ -45,7 +46,6 @@ Page({
               console.log('扫码结果', res)
               if (res.data.result == true) {
                 wx.setStorageSync('sendCaseInfo', res.data.data)
-                // var data = JSON.stringify(res.data.data)
                 wx.navigateTo({
                   url: '/pages/sendInformation/sendInformation?'
                 })

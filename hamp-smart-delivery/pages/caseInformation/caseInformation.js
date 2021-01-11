@@ -20,8 +20,8 @@ Page({
 
   returnBackSing: function () {
     // 确认签收、取消直接返回扫码界面
-    wx.navigateBack({
-      delta: 1
+    wx.switchTab({
+      url: '/pages/signFor/signFor',
     })
   },
   

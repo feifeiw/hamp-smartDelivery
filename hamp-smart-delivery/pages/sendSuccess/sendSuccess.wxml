@@ -5,9 +5,9 @@
             <view class="tips">签收原因</view>
             <view class="itembox">
                 <radio-group bindchange="radioChange">
-                    <label class="check_label" wx:for="{{items}}" wx:key="id">
-                        <radio value="{{item.value}}" checked="{{item.checked}}"/>
-                        <view class="check_name {{item.checked?'checked':''}}">{{item.name}}</view>
+                    <label class="check_label" wx:for="{{items}}" wx:key="typeID">
+                        <radio value="{{item.typeID}}" checked="{{item.checked}}"/>
+                        <view class="check_name {{item.checked?'checked':''}}">{{item.typename}}</view>
                     </label>
                 </radio-group>
             </view>
@@ -42,6 +42,12 @@
                 </view>
             </view>
             <view class="uploadTips">长按删除图片，最少上传3张</view>
+        </view>
+        <view class="formItems">
+            <view class="tips">备注</view>
+            <view class="itembox">
+                <textarea class="textarea" name="textarea" value="{{memo}}" placeholder="请输入备注信息"></textarea>
+            </view>
         </view>
         <view class="btn-area">
             <button class="btn-primary" formType="submit">确认提交</button>

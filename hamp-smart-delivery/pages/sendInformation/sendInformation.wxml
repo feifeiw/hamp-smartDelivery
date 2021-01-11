@@ -37,7 +37,15 @@
   </view>
   <!-- 按钮 -->
   <view class="caseFooter">
-    <view class="btn-primary button" bindtap="toSendConfirm">送达成功</view>
-    <view class="btn-default button" bindtap="toSendFail">送达失败</view>
+    <view class="message">
+      <view><label>送达接收人信息</label></view>
+      <view><label>接收人姓名：</label><text>{{dataArr.receiver}}</text></view>
+      <view><label>地址：</label><text>{{dataArr.deliveraddr}}</text></view>
+      <view><label>联系电话：</label><text>{{dataArr.phoneno}}</text></view>
+    </view>
+    <view>
+      <view class="btn-primary button" bindtap="toSendConfirm">送达成功</view>
+     <view class="btn-default button" bindtap="toSendFail">送达失败</view>
+    </view>
   </view>
 </view>

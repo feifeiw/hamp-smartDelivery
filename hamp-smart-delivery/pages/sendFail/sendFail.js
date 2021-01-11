@@ -8,32 +8,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    items: [{
-        value: '搬迁',
-        name: '搬迁'
-      },
-      {
-        value: '家中无人',
-        name: '家中无人'
-      },
-      {
-        value: '家中无成年亲属',
-        name: '家中无成年亲属'
-      },
-      {
-        value: '张贴告示',
-        name: '张贴告示'
-      },
-      {
-        value: '查无此人',
-        name: '查无此人'
-      }
-    ],
+    items: [],
     imgIndex: 0,
     facialIndex: 0,
     photoArr: [],
     facialphotoArr: [],
-		values: ''
+		values: '',
+		memo: '',
+		imageFile: []
   },
 
   /**
@@ -41,14 +23,11 @@ Page({
    */
   onLoad: function (options) {
     that = this;
-		//案件id
 		let retcode = wx.getStorageSync('retcode');
 		let staffid = wx.getStorageSync('staffid');
 		let courtid = wx.getStorageSync('courtid');
 		let retmessage = wx.getStorageSync('retmessage');
-		// var msg = options.msg; //接收到的参数    str为上个页面传递的key值
 		let msgData = wx.getStorageSync('sendCaseInfo');
-		console.log(msgData)
 		that.setData({
 			OPEN_ID: app.globalData.OPEN_ID,
 			msgData: msgData,
@@ -59,18 +38,53 @@ Page({
 			retmessage: retmessage
 		})
 		console.log("that.data.courtid" + that.data.courtid);
-		// 实例化API核心类
-		// qqmapsdk = new QQMapWX({
-		// 	key: 'EJ3BZ-ZC76P-NCMDO-LN3YE-3H7DT-UAF36'
-		// });
-  },
+		that.getSignReason(); // 获取签收原因
+	},
+	getSignReason: function (e) {
+		wx.showLoading({
+			title: '查询中',
+		})
+		let sessionId = wx.getStorageSync('sessionId');
+		wx.request({
+			url: 'https://51jka.com.cn/wxCourt/getSign4directType',
+			data: {          
+				courtid: wx.getStorageSync('courtid'),
+				loseflag: 1
+			},
+			header: {
+				"Content-Type": "application/x-www-form-urlencoded",
+				"Cookie": sessionId
+			},
+			method: 'GET',
+			success: function(res) {
+				wx.hideLoading();
+				if (res.data.result == true) {
+					let resdata = Array.from(res.data.list)
+					resdata.map(item => {
+						item.checked = false
+					})
+					that.setData({
+						items: resdata
+					})
+				}
+			},
+			fail: function(res) {
+				wx.hideLoading();
+				wx.showToast({
+					title: '查询失败',
+					icon: 'none',
+					mask: true
+				})
+			}
+		})
+	},
   // 签收原因点击事件
   radioChange: function (e) {
     const items = this.data.items
     const values = e.detail.value
     for (let i = 0, len = items.length; i < len; ++i) {
       items[i].checked = false
-      if (items[i].value === e.detail.value) {
+      if (items[i].typeID === e.detail.value) {
         items[i].checked = true
       }
     }
@@ -83,15 +97,13 @@ Page({
 	previewImage: function(e) {
 		var current = e.currentTarget.dataset.src;
 		var arr = this.data.photoArr;
-		console.log(arr)
+		// console.log(arr)
 		wx.previewImage({
 			current: current,
 			urls: arr,
 			success(res) {
-				console.log(res)
 			},
 			fail(res) {
-				console.log(res)
 			}
 		})
 	},
@@ -99,15 +111,13 @@ Page({
 	facialPreviewImage: function(e) {
 		var current = e.currentTarget.dataset.src;
 		var arr = this.data.facialphotoArr;
-		console.log(arr)
+		// console.log(arr)
 		wx.previewImage({
 			current: current,
 			urls: arr,
 			success(res) {
-				console.log(res)
 			},
 			fail(res) {
-				console.log(res)
 			}
 
 		})
@@ -124,13 +134,12 @@ Page({
 				success: function(res) {
 					// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
 					var tempFilePaths = res.tempFilePaths;
-					console.log(tempFilePaths);
+					// console.log(tempFilePaths);
 					var photoArr = that.data.photoArr;
 					tempFilePaths.forEach(function(i) {
-						console.log(i)
 						photoArr.push(i)
 					})
-					console.log(photoArr);
+					// console.log(photoArr);
 					that.setData({
 						photoArr: photoArr
 					})
@@ -138,7 +147,7 @@ Page({
 					that.setData({
 						imgIndex: imgIndex
 					})
-					console.log(that.data.photoArr)
+					// console.log(that.data.photoArr)
 				}
 			})
 		} else {
@@ -161,13 +170,12 @@ Page({
 				success: function(res) {
 					// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
 					var tempFilePaths = res.tempFilePaths;
-					console.log(tempFilePaths);
+					// console.log(tempFilePaths);
 					var facialphotoArr = that.data.facialphotoArr;
 					tempFilePaths.forEach(function(i) {
-						console.log(i)
 						facialphotoArr.push(i)
 					})
-					console.log(facialphotoArr);
+					// console.log(facialphotoArr);
 					that.setData({
 						facialphotoArr: facialphotoArr
 					})
@@ -175,7 +183,7 @@ Page({
 					that.setData({
 						facialIndex: facialIndex
 					})
-					console.log(that.data.facialphotoArr)
+					// console.log(that.data.facialphotoArr)
 				}
 			})
 		} else {
@@ -185,12 +193,11 @@ Page({
 	deleteImg(e) {
 		var that = this;
 		var index = e.currentTarget.dataset.index;
-		console.log(index)
-		console.log(that.data.photoArr)
+		// console.log(that.data.photoArr)
 		var photoArr = that.data.photoArr;
 		photoArr.splice(index, 1);
 		var imgIndex = photoArr.length;
-		console.log(photoArr)
+		// console.log(photoArr)
 		that.setData({
 			photoArr: photoArr,
 			imgIndex: imgIndex
@@ -200,12 +207,11 @@ Page({
 	facialDeleteImg(e) {
 		var that = this;
 		var index = e.currentTarget.dataset.index;
-		console.log(index)
-		console.log(that.data.facialphotoArr)
+		// console.log(that.data.facialphotoArr)
 		var facialphotoArr = that.data.facialphotoArr;
 		facialphotoArr.splice(index, 1);
 		var facialIndex = facialphotoArr.length;
-		console.log(facialphotoArr)
+		// console.log(facialphotoArr)
 		that.setData({
 			facialphotoArr: facialphotoArr,
 			facialIndex: facialIndex
@@ -213,12 +219,13 @@ Page({
   },
   // 提交
   cancelSendSubmit: function (e) {
-    console.log(e.detail.value)
-    var that = this;
-		var reasonArr = that.data.values;
-		var sessionId = wx.getStorageSync('sessionId');
-		var facialIndex = that.data.facialphotoArr.length;
-		var indexImg = that.data.photoArr.length;
+		let that = this;
+		that.setData({
+			memo: e.detail.value.textarea
+		})
+		let reasonArr = that.data.values;
+		let facialIndex = that.data.facialphotoArr.length;
+		let indexImg = that.data.photoArr.length;
 		if (reasonArr.length < 1) {
 			wx.showToast({
 				title: '请选择未签收原因',
@@ -240,49 +247,72 @@ Page({
 		} else {
 			wx.showLoading({
 				title: '提交中',
-      })
-      wx.request({
-				url: 'https://51jka.com.cn/wxCourt/updateState',
-				data: {          
-					courtid: wx.getStorageSync('courtid'),
-					staffid: wx.getStorageSync('staffid'),
-					deliverreccordid: that.data.msgData.deliverreccordid,
-					signresult: 2,
-					signtype: reasonArr
-				},
-				header: {
-					"Content-Type": "application/x-www-form-urlencoded",
-					"Cookie": sessionId
-				},
-				method: 'GET',
-				success: function(res) {
-          console.log('提交结果', res)
-					if (res.data.result == true) {
-						//图片上传
-						wx.hideLoading();
-						that.upLoadFile(that.data.msgData.deliverreccordid);
-					} else {
-						//隐藏loading
-						wx.hideLoading();
-						wx.showToast({
-							title: '提交失败，请重试',
-							icon: 'none',
-							mask: true,
-						})
-					}
-				},
-				fail: function(res) {
+			})
+			that.upLoadFile(that.data.msgData.deliverreccordid)
+    }
+	},
+	uploadStateFail () {
+		let reasonArr = that.data.values;
+		let sessionId = wx.getStorageSync('sessionId');
+		wx.request({
+			url: 'https://51jka.com.cn/wxCourt/updateStatefail',
+			data: {          
+				// deliverreccordid: that.data.msgData.deliverreccordid,
+				// signresult: 2,
+				courtid: wx.getStorageSync('courtid'),
+				barcode: wx.getStorageSync('barcode'),
+				staffid: wx.getStorageSync('staffid'),
+				signtype: reasonArr,
+				memo: that.data.memo,
+				image1: that.data.imageFile[0],
+				image2: that.data.imageFile[1],
+				image3: that.data.imageFile[2],
+				image4: that.data.imageFile[3]
+			},
+			header: {
+				"Content-Type": "application/x-www-form-urlencoded",
+				"Cookie": sessionId
+			},
+			method: 'GET',
+			success: function(res) {
+				console.log('提交结果', res)
+				if (res.data.result == true) {
+					wx.hideLoading();
+					wx.showModal({
+						title: '成功',
+						content: '提交成功',
+						showCancel: false,
+						confirmText: "确定",
+						success(res) {
+							if (res.confirm) {
+								wx.switchTab({
+									url: '/pages/send/send'
+								})
+							}
+						}
+					})
+					// that.upLoadFile(that.data.msgData.deliverreccordid);
+				} else {
 					//隐藏loading
 					wx.hideLoading();
 					wx.showToast({
-						title: '提交失败，请检查网络！',
+						title: '提交失败，请重试',
 						icon: 'none',
-						mask: true
+						mask: true,
 					})
 				}
-			})
-    }
-  },
+			},
+			fail: function(res) {
+				//隐藏loading
+				wx.hideLoading();
+				wx.showToast({
+					title: '提交失败，请检查网络！',
+					icon: 'none',
+					mask: true
+				})
+			}
+		})
+	},
   //上传图片
   upLoadFile (id) {
     var that = this;
@@ -310,7 +340,10 @@ Page({
         console.log(res)
         var data = JSON.parse(res.data)
         if (data.result) {
-          console.log('电子面单上传成功');
+					console.log('电子面单上传成功');
+					that.setData({
+						imageFile: [data.data]
+					})
           //上传图片
           var i = 0;
           that.uploadImg(i, id);
@@ -356,7 +389,11 @@ Page({
       success(res) {
         var data = JSON.parse(res.data)
         if (data.result) {
-          console.log('回执照片上传成功');
+					console.log('回执照片上传成功');
+					const _file = that.data.imageFile.concat(data.data)
+					that.setData({
+						imageFile: _file
+					})
         } else {
           wx.hideLoading()
           wx.showToast({
@@ -382,20 +419,7 @@ Page({
       complete: function() {
         if (i == indexImg) { //当图片传完时，停止调用
           wx.hideLoading();
-          wx.showModal({
-            title: '成功',
-            content: '上传成功',
-            showCancel: false, //是否显示取消按钮
-            confirmText: "确定", //默认是“确定”
-            success(res) {
-              if (res.confirm) {
-                //点击确定
-                wx.switchTab({
-                  url: '/pages/send/send'
-                })
-              }
-            }
-          })
+          that.uploadStateFail()
         }
       }
     })

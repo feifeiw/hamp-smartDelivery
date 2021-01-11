@@ -1,17 +1,17 @@
 {
   "pages":[
+    "pages/signFor/signFor",
+    "pages/sendFail/sendFail",
+    "pages/sendInformation/sendInformation",
     "pages/report/report",
     "pages/relation/relation",
-    "pages/signFor/signFor",
     "pages/user/user",
     "pages/register/register",
     "pages/authorization/authorization",
     "pages/map/map",
     "pages/caseInformation/caseInformation",
-    "pages/sendFail/sendFail",
-    "pages/sendSuccess/sendSuccess",
-    "pages/sendInformation/sendInformation",
-    "pages/send/send"
+    "pages/send/send",
+    "pages/sendSuccess/sendSuccess"
   ],
   "window":{
     "backgroundTextStyle":"light",
