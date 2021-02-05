@@ -122,7 +122,6 @@ Page({
                       })
                     }
                   })
-
                 } else {
                   wx.hideLoading()
                   wx.showModal({

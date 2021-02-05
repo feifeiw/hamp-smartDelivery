@@ -32,9 +32,10 @@
             <block wx:for="{{dataArr}}" wx:key="*this">
                 <view class="tabLi">
                     <view>案号：<text>{{item.caseno}}</text></view>
-                    <view>卷宗数：<text>{{item.filecount}}</text></view>
-                    <view wx:if="{{activeIndex != 2}}">流转日期：<text>{{item.transdate || '无'}}</text></view>
-                    <view wx:if="{{activeIndex != 2}}">{{(activeIndex == 0) ? '每日签收时间：' : '转出时间：'}}<text>{{item.sendTime || "无"}}</text></view>
+                    <view>卷宗序号：<text>{{item.filecount}}</text></view>
+                    <view wx:if="{{activeIndex != 2}}">{{(activeIndex == 0) ? '签收时间：' : '转出时间：'}}<text>{{item.transdate || "无"}}</text></view>
+                    <view wx:if="{{activeIndex == 2}}">转入日期：<text>{{item.transdate || '无'}}</text></view>
+                    <view wx:if="{{activeIndex == 2}}">持有时间：<text>{{item.holddays || '无'}}</text></view>
                 </view>
             </block>
             <block wx:if="{{dataArr.length >= 10}}">

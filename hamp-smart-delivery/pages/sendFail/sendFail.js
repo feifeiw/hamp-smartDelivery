@@ -13,7 +13,7 @@ Page({
     facialIndex: 0,
     photoArr: [],
     facialphotoArr: [],
-		values: '',
+		values: [],
 		memo: '',
 		imageFile: []
   },
@@ -244,9 +244,15 @@ Page({
 				icon: 'none',
 				mask: true,
 			})
+		} else if (!that.data.memo) {
+			wx.showToast({
+				title: '请填写备注信息',
+				icon: 'none',
+				mask: true,
+			})
 		} else {
 			wx.showLoading({
-				title: '提交中',
+				title: '提交中...',
 			})
 			that.upLoadFile(that.data.msgData.deliverreccordid)
     }
@@ -275,7 +281,7 @@ Page({
 			},
 			method: 'GET',
 			success: function(res) {
-				console.log('提交结果', res)
+				// console.log('提交结果', res)
 				if (res.data.result == true) {
 					wx.hideLoading();
 					wx.showModal({

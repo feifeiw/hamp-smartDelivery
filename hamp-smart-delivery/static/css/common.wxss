@@ -132,10 +132,11 @@ button{
   display: none;
 }
 .updateDataCommon .itembox .check_label .check_name{
-  font-size: 32rpx;
+  font-size: 30rpx;
   width: auto;
   height: auto;
-  padding: 20rpx;
+  border-radius: 8rpx;
+  padding: 14rpx 20rpx;
   border: 1rpx solid #eeeeee;
 }
 .updateDataCommon .itembox .check_label .check_name.checked{

@@ -12,7 +12,9 @@ Page({
     photoArr: [],
 		facialphotoArr: [],
 		memo: '',
-		imageFile: []
+		imageFile: [],
+		values: [],
+		imgSize: ''
   },
 
   /**
@@ -94,7 +96,7 @@ Page({
 	previewImage: function(e) {
 		var current = e.currentTarget.dataset.src;
 		var arr = this.data.photoArr;
-		// console.log(arr)
+		// console.log(arr[0])
 		wx.previewImage({
 			current: current,
 			urls: arr,
@@ -110,7 +112,6 @@ Page({
 	facialPreviewImage: function(e) {
 		var current = e.currentTarget.dataset.src;
 		var arr = this.data.facialphotoArr;
-		// console.log(arr)
 		wx.previewImage({
 			current: current,
 			urls: arr,
@@ -120,7 +121,22 @@ Page({
 			fail(res) {
 				// console.log(res)
 			}
-
+		})
+		// 测试、获取图片信息
+		wx.getImageInfo({
+			src: arr[0],
+			success: function (res) {
+				const imgSize = Math.round(that.data.imgSize/1024*100)/100
+				const msg = '宽'+res.width+'，高'+res.height+'，大小'+that.data.imgSize+'='+imgSize+'kb'
+				wx.showModal({
+					title: '图片大小',
+					content: msg,
+					showCancel: false,
+					confirmText: "确定",
+					success(res) {
+					}
+				})
+			}
 		})
 	},
 	// 拍照
@@ -130,12 +146,10 @@ Page({
 		if (indexImg < 5) {
 			wx.chooseImage({
 				count: 5, // 默认9
-				sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有'original', 'compressed'
-				sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+				sizeType: ['original'],
+				sourceType: ['album', 'camera'],
 				success: function(res) {
-					// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
 					var tempFilePaths = res.tempFilePaths;
-					// console.log(tempFilePaths);
 					var photoArr = that.data.photoArr;
 					tempFilePaths.forEach(function(i) {
 						photoArr.push(i)
@@ -166,19 +180,19 @@ Page({
 		if (facialIndex < 1) {
 			wx.chooseImage({
 				count: 1, // 默认9
-				sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有'original', 'compressed'
-				sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+				sizeType: ['original'],
+				sourceType: ['album', 'camera'],
 				success: function(res) {
-					// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
 					var tempFilePaths = res.tempFilePaths;
-					// console.log(tempFilePaths);
+					// console.log('图片的本地临时文件列表', res.tempFiles[0].size)
 					var facialphotoArr = that.data.facialphotoArr;
 					tempFilePaths.forEach(function(i) {
 						facialphotoArr.push(i)
 					})
 					// console.log(facialphotoArr);
 					that.setData({
-						facialphotoArr: facialphotoArr
+						facialphotoArr: facialphotoArr,
+						imgSize:  res.tempFiles[0].size
 					})
 					var facialIndex = that.data.facialphotoArr.length;
 					that.setData({
@@ -187,7 +201,6 @@ Page({
 					// console.log(that.data.facialphotoArr)
 				}
 			})
-		} else {
 		}
 	},
 	//删除图片
@@ -227,9 +240,6 @@ Page({
 		let reasonArr = that.data.values;
 		let facialIndex = that.data.facialphotoArr.length; //电子面单张数
 		let indexImg = that.data.photoArr.length; //回执照片张数
-		wx.showLoading({
-			title: '提交中',
-		})
 		if (reasonArr.length < 1) {
 			wx.showToast({
 				title: '请选择签收原因',
@@ -248,9 +258,15 @@ Page({
 				icon: 'none',
 				mask: true,
 			})
+		} else if (!that.data.memo) {
+			wx.showToast({
+				title: '请填写备注信息',
+				icon: 'none',
+				mask: true,
+			})
 		} else {
 			wx.showLoading({
-				title: '提交中',
+				title: '提交中...',
 			})
 			that.upLoadFile(that.data.msgData.deliverreccordid)
     }
@@ -280,7 +296,7 @@ Page({
 			},
 			method: 'GET',
 			success: function(res) {
-				console.log('提交结果', res)
+				// console.log('提交结果', res)
 				if (res.data.result == true) {
 					wx.hideLoading();
 					wx.showModal({
@@ -342,12 +358,14 @@ Page({
         "Cookie": sessionId
       },
       success(res) {
-        var data = JSON.parse(res.data)
+				var data = JSON.parse(res.data)
+				console.log(res.data)
         if (data.result) {
 					console.log('电子面单上传成功');
 					that.setData({
 						imageFile: [data.data]
 					})
+					console.log(data.data.fileSize,data.data.width,data.data.height)
           //上传图片
           var i = 0;
           that.uploadImg(i, id);

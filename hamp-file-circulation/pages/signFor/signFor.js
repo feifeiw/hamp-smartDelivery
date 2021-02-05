@@ -23,19 +23,59 @@ Page({
     wx.scanCode({
       onlyFromCamera: true,
       success(res) {
+        // 调用签收接口
         if (res.result) {
-          wx.showModal({
-            title: '',
-            content: '扫码签收成功！',
-            showCancel: false,
-            success (res) {
-              if (res.confirm) {
-                wx.switchTab({
-                  url: '/pages/files/files',
-                })
-              }
-            }
+          let expressno = res.result;
+          wx.showLoading({
+            title: '识别中...',
           })
+          let retcode = wx.getStorageSync('retcode');
+          let staffid = wx.getStorageSync('staffid');
+          let courtid = wx.getStorageSync('courtid');
+          if (retcode === 0) {
+            wx.request({
+              url: 'https://51jka.com.cn/wxCirculation/updateState',
+              data: {
+                courtid: courtid,
+                staffid: staffid,
+                expressno :expressno
+              },
+              method: 'GET',
+              success: function(res) {
+                if (res.data.result == true) {
+                  wx.hideLoading();
+                  wx.showModal({
+                    title: '成功',
+                    content: '扫码签收成功！',
+                    showCancel: false,
+                    success (res) {
+                      if (res.confirm) {
+                        wx.switchTab({
+                          url: '/pages/files/files',
+                        })
+                      }
+                    }
+                  })
+                } else {
+                  //隐藏loading
+                  wx.hideLoading();
+                  wx.showModal({
+                    title: '失败',
+                    content: res.data.msg
+                  })
+                }
+              }
+            })
+          } else {
+            // 未授权
+            wx.navigateTo({
+              url: '/pages/authorization/authorization',
+            })
+            wx.showModal({
+              title: '未授权，请先授权',
+              content: "未授权，请先授权"
+            })
+          }
         } else {
           wx.showModal({
             title: '失败',
