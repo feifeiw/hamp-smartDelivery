@@ -6,7 +6,7 @@
         <picker bindchange="bindPickerChange" value="{{index}}" range="{{yearArr}}" class="yearPicker">
           <view class="picker">{{yearArr[index]}}</view>
         </picker>
-        <input class="weui-input" placeholder="请输入案号" bindinput="bindKeyInput" class="casePicker" />
+        <input class="weui-input casePicker" name="caseNO" placeholder="请输入案号" type="text" bindinput="bindKeyInput"/>
          <button class="searchBtn" bindtap="getCaseList">查询</button>
       </view>
     </view>

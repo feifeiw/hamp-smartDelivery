@@ -35,9 +35,7 @@ Page({
     this.setData({
       OPEN_ID: app.globalData.OPEN_ID,
       wxlogin: app.wxlogin,
-      dateStart: time,
-			dateEnd: time,
-			roldAuth: wx.getStorageSync('userAuth').roldAuth,
+			roldAuth: wx.getStorageSync('userAuth').roldAuth
     })
     that.getSingInList()
   },
@@ -128,6 +126,9 @@ Page({
 	// 获取持有详情
 	getHoledDetail(_caseno) {
 		wx.showLoading()
+		that.setData({
+			detailArr:[],
+		})
 		wx.request({
 			url: 'https://51jka.com.cn/wxCirculation/gethold2',
 			data: {
@@ -157,6 +158,9 @@ Page({
 	// 获取详情
 	getDetail(_caseno) {
 		wx.showLoading()
+		that.setData({
+			detailArr:[],
+		})
 		wx.request({
 			url: 'https://51jka.com.cn/wxCirculation/getsign2',
 			data: {
@@ -206,6 +210,7 @@ Page({
 				},
 				method: 'GET',
 				success: function(res) {
+					wx.hideLoading();
 					if (res.data.rows) {
 						const _data = that.data.dataArr.concat(res.data.rows)
 						_data.map(item => item.showIndex = false)
@@ -213,34 +218,25 @@ Page({
 							dataArr: _data,
 							updateLoadText: '上拉加载更多'
 						})
-						wx.hideLoading();
 					} else {
 						that.setData({
 							uploadFlag: false,
               updateLoadText: '没有更多数据了~'
 						})
-						wx.hideLoading();
 					}
 				},
 				fail: function(res) {
-					//隐藏loading
 					wx.hideLoading();
 					wx.showToast({
 						title: '查询失败，请检查网络！',
 						icon: 'none',
-						mask: true,
-						success: function(res) {},
-						fail: function(res) {},
-						complete: function(res) {},
+						mask: true
 					})
 				}
 			})
 		} else {
 			wx.navigateTo({
-				url: '/pages/register/register',
-				success: function(res) {},
-				fail: function(res) {},
-				complete: function(res) {},
+				url: '/pages/register/register'
 			})
 			wx.showModal({
 				title: '请注册',
@@ -268,6 +264,7 @@ Page({
 				},
 				method: 'GET',
 				success: function(res) {
+					wx.hideLoading();
 					if (res.data.rows) {
 						const _data = that.data.dataArr.concat(res.data.rows)
 						_data.map(item => item.showIndex = false)
@@ -275,13 +272,11 @@ Page({
 							dataArr: _data,
 							updateLoadText: '上拉加载更多'
 						})
-						wx.hideLoading();
 					} else {
 						that.setData({
 							uploadFlag: false,
               updateLoadText: '没有更多数据了~'
 						})
-						wx.hideLoading();
 					}
 				},
 				fail: function(res) {
@@ -289,19 +284,13 @@ Page({
 					wx.showToast({
 						title: '查询失败，请检查网络！',
 						icon: 'none',
-						mask: true,
-						success: function(res) {},
-						fail: function(res) {},
-						complete: function(res) {},
+						mask: true
 					})
 				}
 			})
 		} else {
 			wx.navigateTo({
-				url: '/pages/register/register',
-				success: function(res) {},
-				fail: function(res) {},
-				complete: function(res) {},
+				url: '/pages/register/register'
 			})
 			wx.showModal({
 				title: '请注册',
@@ -326,8 +315,8 @@ Page({
 				},
 				method: 'GET',
 				success: function(res) {
+					wx.hideLoading();
 					if (res.data.rows) {
-						wx.hideLoading();
 						const _data = that.data.dataArr.concat(res.data.rows)
 						_data.map(item => item.showIndex = false)
 						that.setData({
@@ -335,7 +324,6 @@ Page({
 							updateLoadText: '上拉加载更多'
 						})
 					} else {
-						wx.hideLoading();
 						that.setData({
 							uploadFlag: false,
               updateLoadText: '没有更多数据了~'
@@ -343,24 +331,17 @@ Page({
 					}
 				},
 				fail: function(res) {
-					//隐藏loading
 					wx.hideLoading();
 					wx.showToast({
 						title: '查询失败，请检查网络！',
 						icon: 'none',
-						mask: true,
-						success: function(res) {},
-						fail: function(res) {},
-						complete: function(res) {},
+						mask: true
 					})
 				}
 			})
 		} else {
 			wx.navigateTo({
-				url: '/pages/register/register',
-				success: function(res) {},
-				fail: function(res) {},
-				complete: function(res) {},
+				url: '/pages/register/register'
 			})
 			wx.showModal({
 				title: '请注册',
@@ -370,7 +351,6 @@ Page({
   },
 	// 归档、移交、退回
 	operateFile(e) {
-		let that = this;
 		let _caseno = e.currentTarget.dataset.caseno;
 		let type = e.currentTarget.dataset.type
 		wx.showLoading()
@@ -385,12 +365,22 @@ Page({
 			method: 'GET',
 			success: function(res) {
 				wx.hideLoading();
-				wx.showToast({
-					title: '操作成功！',
-					icon: 'success',
-					mask: true
+				wx.showModal({
+					title: '',
+					content: '操作成功！',
+					showCancel: false,
+					success (res) {
+						if (res.confirm) {
+							that.setData({
+								dataArr: [],
+								updateLoadText: '上拉加载更多',
+								uploadFlag: true,
+								pageNum: 1,
+							})
+							that.getHoldList(); // 刷新
+						}
+					}
 				})
-				this.getHoldList(); // 刷新
 			},
 			fail: function(res) {
 				wx.hideLoading();

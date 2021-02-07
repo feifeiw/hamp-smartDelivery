@@ -44,6 +44,8 @@
   padding: 200rpx 0 100rpx 0;
   display: inline-block;
   width: 100%;
+  height: calc(100vh - 300rpx);
+  overflow: auto;
 }
 .borderBt{
   background: #fff;

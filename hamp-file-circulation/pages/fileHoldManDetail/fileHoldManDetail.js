@@ -1,6 +1,5 @@
 // pages/files/files.js
 const app = getApp();
-let until = require('../../utils/util')
 let that = this;
 Page({
 
@@ -110,8 +109,8 @@ Page({
 				},
 				method: 'GET',
 				success: function(res) {
+					wx.hideLoading();
 					if (res.data.rows) {
-						wx.hideLoading();
 						const _data = that.data.dataArr.concat(res.data.rows)
 						_data.map(item => item.showIndex = false)
 						that.setData({
@@ -119,8 +118,6 @@ Page({
 							updateLoadText: '上拉加载更多'
 						})
 					} else {
-						//隐藏loading
-						wx.hideLoading();
 						that.setData({
 							uploadFlag: false,
               updateLoadText: '没有更多数据了~'
@@ -133,19 +130,13 @@ Page({
 					wx.showToast({
 						title: '查询失败，请检查网络！',
 						icon: 'none',
-						mask: true,
-						success: function(res) {},
-						fail: function(res) {},
-						complete: function(res) {},
+						mask: true
 					})
 				}
 			})
 		} else {
 			wx.navigateTo({
-				url: '/pages/register/register',
-				success: function(res) {},
-				fail: function(res) {},
-				complete: function(res) {},
+				url: '/pages/register/register'
 			})
 			wx.showModal({
 				title: '请注册',
@@ -194,12 +185,25 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+		this.setData({
+			dataArr: [],
+			pageNum: 1
+		})
+		this.getHoldList()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+		let that = this
+		if (!that.data.uploadFlag) return
+		const num = that.data.pageNum + 1
+		that.setData({
+			updateLoadText: '正在加载....',
+			pageNum: num
+		})
+		that.getHoldList()
   },
 
   /**

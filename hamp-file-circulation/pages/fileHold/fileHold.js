@@ -49,30 +49,16 @@ Page({
 				method: 'GET',
 				success: function(res) {
 					wx.hideLoading();
+					console.log(res.data)
 					if (res.data) {
-						// 测试数据
-						const data = [
-							{
-								"orgID": "488",
-								"orgname": "汉普辅助",
-								"casecount": "2",
-								"filecount": "6"
-							},
-							{
-								"orgID": "488",
-								"orgname": "民事审核庭",
-								"casecount": "12",
-								"filecount": "3"
-							}
-						]
 						let _casenum = 0
 						let _filenum = 0
-						data.forEach(element => {
+						res.data.forEach(element => {
 							_casenum += Number(element.casecount)
 							_filenum += Number(element.filecount)
 						});
 						that.setData({
-							holdData: data,
+							holdData: res.data,
 							casecountAll: _casenum,
 							filecountAll: _filenum
 						})

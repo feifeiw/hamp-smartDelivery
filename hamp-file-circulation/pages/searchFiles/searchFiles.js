@@ -26,7 +26,6 @@ Page({
       OPEN_ID: app.globalData.OPEN_ID,
       wxlogin: app.wxlogin,
     })
-    this.getCaseList()
 	},
 	bindKeyInput(e) {
 		this.setData({
@@ -42,8 +41,8 @@ Page({
   // 清除当前页缓存
   clearCache() {
 	  that.setData({
-			dataArr: '',
-			detailArr: ''
+			dataArr: [],
+			detailArr: []
 	  })
   },
 	// 点击展开/收起详情
@@ -108,7 +107,7 @@ Page({
 			title: '查询中',
 		})
 		that.setData({
-			dataArr: '',
+			dataArr: [],
 		})
 		let retcode = wx.getStorageSync('retcode');
 		if (retcode == 0) {
