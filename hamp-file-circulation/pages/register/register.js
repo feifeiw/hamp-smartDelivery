@@ -1,4 +1,5 @@
 // pages/register/register.js
+const wxMd5 = require('../../utils/md5.js')
 var app = getApp();
 Page({
   /**
@@ -10,8 +11,12 @@ Page({
     verificationCode: '',
     second: 60,
     getCodeValue: '获取验证码',
+    accountNO: '',
+    password: '',
     errMsg: '',
-    isClickCode: true
+    isClickCode: true,
+    activeIndex: 0,
+    regiesterTabs: ['手机号注册', '账号注册']
   },
 
   /**
@@ -21,6 +26,24 @@ Page({
     let recode = wx.getStorageSync('recode')
     // if (recode )
     console.log('globalData信息', app.globalData)
+  },
+  // 切换注册
+  tabClick(e) {
+    this.setData({
+      activeIndex: e.currentTarget.id
+    });
+  },
+  // 输入账号
+  bindAccountNO(e) {
+    this.setData({
+			password: e.detail.value
+    })
+  },
+  // 输入密码
+  bindPassword(e) {
+    this.setData({
+			password: e.detail.value
+    })
   },
   // 输入姓名
   bindName(e) {
@@ -115,6 +138,76 @@ Page({
 		promise.then((setTimer) => {
 			clearInterval(setTimer)
 		})
+  },
+  // 账号注册
+  accountSubmit(e) {
+    let that = this
+    let formObj = e.detail.value
+    let sessionId = wx.getStorageSync('sessionId')
+    if (!formObj.accountNO || !formObj.password) {
+      this.setData({errMsg: '请填写完整信息！'})
+      setTimeout(() => {
+        this.setData({errMsg: ''})
+      }, 1000);
+      return false
+    }
+    let _password = wxMd5.md5(formObj.password).toLocaleUpperCase(); // md5加密同时toLocaleUpperCase小写转大写 
+    console.log(formObj.accountNO, formObj.password)
+    // return
+    wx.showLoading({
+      title: '注册中...',
+    })
+    wx.request({
+      url: 'https://51jka.com.cn/wxCirculation/wxRegister',
+      data: {
+        accountNO: formObj.accountNO,
+        passwordmd5: formObj.password,
+        wxUNID:  wx.getStorageSync('appCourtid'),
+        wxOpenID: app.globalData.OPEN_ID
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": sessionId
+      },
+      method: 'GET',
+      success(res) {
+        console.log('注册返回信息', res)
+        wx.hideLoading();
+        if (res.data.result == true) {
+          wx.showModal({
+            title: '成功',
+            content: '注册成功',
+            showCancel: false,
+            success: function(res) {
+              if (res.confirm) {
+                that.getUserInfo()
+                wx.switchTab({
+                  url: '/pages/signFor/signFor',
+                  success: function(e) {
+                    let page = getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onLoad();
+                  }
+                })
+              }
+            }
+          })
+        } else {
+          wx.showModal({
+            title: '失败',
+            content: res.data.msg
+          })
+        }
+      },
+      fail(err) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '注册失败，请检查网络！',
+          icon: 'none',
+          mask: true
+        })
+      }
+    })
   },
   // 提交注册
   registerSubmit(e) {

@@ -1,0 +1,58 @@
+/* pages/files/files.wxss */
+.IndexWrapper{
+  padding-top: 110rpx;
+  height: 100%;
+}
+.holdTop{
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 30rpx;
+  color: #000;
+  padding: 0 30rpx;
+}
+.holdWidth_1{
+  width: 44%;
+  display: inline-block;
+  text-align: left;
+}
+.holdWidth_2, .holdWidth_3{
+  width: 28%;
+  display: inline-block;
+  text-align: center;
+  color: #000;
+}
+.holdList{
+  padding: 20rpx 30rpx 0 30rpx;
+  background: #fff;
+  font-size: 30rpx;
+  height: calc(100vh - 110rpx);
+  box-sizing: border-box;
+  z-index: 9;
+}
+.holdList .borderBt{
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  padding: 0 0 110rpx 0;
+  box-sizing: border-box;
+}
+.holdList .holdWidth_1{
+  color: #5275f5;
+}
+.holdList-li{
+  height: 90rpx;
+  line-height: 90rpx;
+  border-bottom: 2rpx solid #f1f1f1;
+}
+.positionBottom{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  background: #fff;
+  border-bottom: none;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  border-top: 2rpx solid #f1f1f1;
+}

@@ -56,7 +56,7 @@ App({
                     timeout: 30000,
                     method: 'GET',
                     success: function(res) {
-                      console.log('openid', res.data)
+                      console.log('openid', JSON.parse(res.data.data))
                       if (res.data.result) {
                         let jsonObj = JSON.parse(res.data.data); //json字符串转json对象
                         wx.setStorageSync('avatarUrl',jsonObj.avatarUrl)
@@ -89,6 +89,32 @@ App({
                           wx.setStorageSync('staffid',res.data.wxlogin.staffid)
                           wx.setStorageSync('retcode',res.data.wxlogin.retcode)
                           wx.setStorageSync('retmessage',res.data.wxlogin.retmessage)
+                          // 获取权限标识
+                          wx.showLoading({
+                            title: '获取权限标识...',
+                          })
+                          wx.request({
+                            url: 'https://51jka.com.cn/wxCirculation/getAuth',
+                            data: {
+                              courtid: res.data.wxlogin.courtid,
+                              staffid: res.data.wxlogin.staffid
+                            },
+                            method: 'GET',
+                            success: function(data) {
+                              wx.hideLoading();
+                              console.log('权限标识', data.data)
+                              if (!data.statusCode == 200) return
+                              wx.setStorageSync('userAuth', data.data.data)
+                            },
+                            fail: function(err) {
+                              wx.hideLoading();
+                              wx.showToast({
+                                title: '获取权限标识失败，请重试！',
+                                icon: 'none',
+                                mask: true
+                              })
+                            }
+                          })
                         }
                       }
                     },

@@ -19,7 +19,11 @@ Page({
 		updateLoadText: '上拉加载更多',
 		uploadFlag: true,
 		pageNum: 1,
-		paddTop: '100'
+		paddTop: '100',
+		roldAuth: '',
+		detailArr: [],
+		testData: [],
+		transflag: 0
   },
 
   /**
@@ -33,7 +37,8 @@ Page({
       OPEN_ID: app.globalData.OPEN_ID,
       wxlogin: app.wxlogin,
       dateStart: time,
-      dateEnd: time
+			dateEnd: time,
+			roldAuth: wx.getStorageSync('userAuth').roldAuth,
     })
     that.getSingInList()
   },
@@ -43,7 +48,8 @@ Page({
 			dataArr: [],
 			updateLoadText: '上拉加载更多',
 			uploadFlag: true,
-			pageNum: 1
+			pageNum: 1,
+			transflag: nowIndex
     });
     if (nowIndex == 0) {
       this.getSingInList()
@@ -62,7 +68,8 @@ Page({
 			dataArr: [],
 			updateLoadText: '上拉加载更多',
 			uploadFlag: true,
-			pageNum: 1
+			pageNum: 1,
+			transflag: 0
 	  })
   },
   // 时间段选择  
@@ -85,7 +92,8 @@ Page({
 			dataArr: [],
 			updateLoadText: '上拉加载更多',
 			uploadFlag: true,
-			pageNum: 1
+			pageNum: 1,
+			transflag: tabIndex
     });
     if (tabIndex == 0) {
       that.getSingInList()
@@ -94,7 +102,93 @@ Page({
     } else if (tabIndex == 2) {
       that.getHoldList()
     }
-  },
+	},
+	// 点击展开/收起详情
+	ShowDetail(e) {
+		let that = this;
+		let index = e.currentTarget.dataset.index;
+		let _caseno = e.currentTarget.dataset.caseno
+		let _startStatus = that.data.dataArr[index].showIndex
+		that.data.dataArr.map(item => {
+			item.showIndex = false
+			if (_startStatus && item.caseno == _caseno) {
+				item.showIndex = false
+			} else if (!_startStatus && item.caseno == _caseno) {
+				item.showIndex = !item.showIndex
+			}
+		})
+		that.setData({
+			dataArr: that.data.dataArr
+		})
+		if (!_startStatus && that.data.transflag!= 2) {
+			that.getDetail(_caseno)
+		} else if (!_startStatus && that.data.transflag == 2) {
+			that.getHoledDetail(_caseno)
+		}
+	},
+	// 获取持有详情
+	getHoledDetail(_caseno) {
+		wx.showLoading()
+		wx.request({
+			url: 'https://51jka.com.cn/wxCirculation/gethold2',
+			data: {
+				courtid: wx.getStorageSync('courtid'),
+				staffid: wx.getStorageSync('staffid'),
+				caseNO: _caseno
+			},
+			method: 'GET',
+			success: function(res) {
+				wx.hideLoading();
+				console.log(res.data)
+				if (res.data) {
+					that.setData({
+						detailArr: res.data,
+					})
+				}
+			},
+			fail: function(res) {
+				wx.hideLoading();
+				wx.showToast({
+					title: '查询卷宗详情失败，请重试！',
+					icon: 'none',
+					mask: true
+				})
+			}
+		})
+	},
+	// 获取详情
+	getDetail(_caseno) {
+		wx.showLoading()
+		wx.request({
+			url: 'https://51jka.com.cn/wxCirculation/getsign2',
+			data: {
+				courtid: wx.getStorageSync('courtid'),
+				staffid: wx.getStorageSync('staffid'),
+				begindate: that.data.dateStart + ' 00:00',
+				enddate: that.data.dateEnd + ' 23:59',
+				transflag: that.data.transflag,
+				caseNO: _caseno
+			},
+			method: 'GET',
+			success: function(res) {
+				wx.hideLoading();
+				console.log(res.data)
+				if (res.data) {
+					that.setData({
+						detailArr: res.data,
+					})
+				}
+			},
+			fail: function(res) {
+				wx.hideLoading();
+				wx.showToast({
+					title: '查询卷宗详情失败，请重试！',
+					icon: 'none',
+					mask: true
+				})
+			}
+		})
+	},
   // 获取每日签收
   getSingInList: function () {
     wx.showLoading({
@@ -117,6 +211,7 @@ Page({
 				success: function(res) {
 					if (res.data.rows) {
 						const _data = that.data.dataArr.concat(res.data.rows)
+						_data.map(item => item.showIndex = false)
 						that.setData({
 							dataArr: _data,
 							updateLoadText: '上拉加载更多'
@@ -158,7 +253,6 @@ Page({
   },
   // 获取每日转出
   getRollOutList: function () {
-		console.log('下一页', that.data.pageNum)
     wx.showLoading({
 			title: '查询中',
 		})
@@ -179,6 +273,7 @@ Page({
 				success: function(res) {
 					if (res.data.rows) {
 						const _data = that.data.dataArr.concat(res.data.rows)
+						_data.map(item => item.showIndex = false)
 						that.setData({
 							dataArr: _data,
 							updateLoadText: '上拉加载更多'
@@ -237,6 +332,7 @@ Page({
 					if (res.data.rows) {
 						wx.hideLoading();
 						const _data = that.data.dataArr.concat(res.data.rows)
+						_data.map(item => item.showIndex = false)
 						that.setData({
 							dataArr: _data,
 							updateLoadText: '上拉加载更多'
@@ -276,7 +372,41 @@ Page({
 			})
 		}
   },
-
+	// 归档、移交、退回
+	operateFile(e) {
+		let that = this;
+		let _caseno = e.currentTarget.dataset.caseno;
+		let type = e.currentTarget.dataset.type
+		wx.showLoading()
+		wx.request({
+			url: 'https://51jka.com.cn/wxCirculation/fileReturnTransferRevoke',
+			data: {
+				courtid: wx.getStorageSync('courtid'),
+				staffid: wx.getStorageSync('staffid'),
+				caseno: _caseno,
+				closeway: type // 1 归档，2 向上移交  3-退回
+			},
+			method: 'GET',
+			success: function(res) {
+				wx.hideLoading();
+				// if (res.data) {
+				wx.showToast({
+					title: '操作成功！',
+					icon: 'success',
+					mask: true
+				})
+				// }
+			},
+			fail: function(res) {
+				wx.hideLoading();
+				wx.showToast({
+					title: '操作失败，请重试！',
+					icon: 'none',
+					mask: true
+				})
+			}
+		})
+	},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {},
+  "navigationStyle": "default",
+  "navigationBarTitleText": "流转过程",
+  "navigationBarTextStyle": "black",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true
+}

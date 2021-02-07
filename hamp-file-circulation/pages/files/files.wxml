@@ -28,14 +28,37 @@
     </view>
     <!-- 列表 -->
     <view class="tabList" style="padding-top: {{activeIndex == 2 ? '110rpx' : '200rpx'}}">
-        <view wx:if="{{dataArr.length > 0}}">
-            <block wx:for="{{dataArr}}" wx:key="*this">
+        <view wx:if="{{dataArr.length > 0}}"  class="borderBt">
+            <block wx:for="{{dataArr}}" wx:key="*this" wx:for-index = "index">
                 <view class="tabLi">
-                    <view>案号：<text>{{item.caseno}}</text></view>
-                    <view>卷宗序号：<text>{{item.filecount}}</text></view>
-                    <view wx:if="{{activeIndex != 2}}">{{(activeIndex == 0) ? '签收时间：' : '转出时间：'}}<text>{{item.transdate || "无"}}</text></view>
-                    <view wx:if="{{activeIndex == 2}}">转入日期：<text>{{item.transdate || '无'}}</text></view>
-                    <view wx:if="{{activeIndex == 2}}">持有时间：<text>{{item.holddays || '无'}}</text></view>
+                    <view class="title" bindtap="ShowDetail" data-index="{{index}}" data-caseno="{{item.caseno}}">
+                      <text class="fl">{{item.caseno}}</text>
+                      <view class="fr">
+                        <text>{{item.filecount}}/{{item.filecount0}}</text>
+                        <view class="arrowIcon"><image src="../../static/image/{{item.showIndex == false ? 'arrow_right':'arrow_down'}}.png"></image></view>
+                      </view>
+                    </view>
+                    <view class="detail" wx:if="{{item.showIndex == true}}">
+                      <view class="detail_li" wx:for="{{detailArr}}" wx:key="*this" wx:for-item="detail">
+                        <view class="fileNO">{{detail.fileNO}}</view>
+                        <view class="transdate">
+                          <text wx:if="{{activeIndex != 2}}">{{detail.transdate}}</text>
+                          <text wx:if="{{activeIndex == 2}}">共持有{{detail.holddays}}</text>
+                        </view>
+                      </view>
+                      <!-- 操作 -->
+                      <view class="operate" wx:if="{{activeIndex == 2}}">
+                        <view class="display-block txtBlue" style="width:20%;" wx:if="{{roldAuth.indexOf('101') != -1}}" bindtap="operateFile" data-caseno="{{item.caseno}}" data-type="1">
+                          <image src="../../static/image/guidang.png"></image>归档
+                        </view>
+                        <view class="display-block txtBlue" style="width:40%;" wx:if="{{roldAuth.indexOf('102') != -1}}" bindtap="operateFile" data-caseno="{{item.caseno}}" data-type="2">
+                          <image src="../../static/image/yijiao.png"></image>向上级法院移交
+                        </view>
+                        <view class="display-block txtRed" style="width:40%;" wx:if="{{roldAuth.indexOf('103') != -1}}" bindtap="operateFile" data-caseno="{{item.caseno}}" data-type="3">
+                          <image src="../../static/image/tui.png"></image>退回基层法院
+                        </view>
+                      </view>
+                    </view>
                 </view>
             </block>
             <block wx:if="{{dataArr.length >= 10}}">

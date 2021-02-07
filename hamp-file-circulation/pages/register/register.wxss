@@ -1,14 +1,30 @@
 /* pages/register/register.wxss */
 .regiester{
   width: 750rpx;
-  padding:80rpx 60rpx;
+  padding:20rpx 60rpx 60rpx 60rpx;
   box-sizing: border-box;
 }
 .tips{
-  font-size: 36rpx;
+  font-size: 32rpx;
   font-weight: bold;
   color: #000;
+  color: red;
   margin-bottom: 80rpx;
+  opacity: 0.5;
+}
+.regiester-tab{
+  width: 100%;
+  font-size: 36rpx;
+  line-height: 60rpx;
+  margin-bottom: 30rpx;
+}
+.regiester-tab .tabcell.active{
+  color: #5275f5;
+  border-bottom: 4rpx solid #5275f5;
+}
+.regiester-tab .tabcell{
+  display: inline-block;
+  margin-right: 50rpx;
 }
 input{
   width: 630rpx;

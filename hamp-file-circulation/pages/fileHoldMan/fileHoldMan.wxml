@@ -1,0 +1,32 @@
+<!--pages/files/files.wxml-->
+<view class="IndexWrapper">
+    <!-- 头部 -->
+    <view class="holdTop tabcontent">
+      <view class="orgName">【{{orgName}}】持有统计</view>
+      <view>
+        <view class="holdWidth_1">持有人</view>
+        <view class="holdWidth_2">案件（件）</view>
+        <view class="holdWidth_3">卷宗（卷）</view>
+      </view>
+    </view>
+    <!-- 列表 -->
+    <view class="holdList">
+        <view wx:if="{{holdOrgData.length > 0}}"  class="borderBt">
+            <block wx:for="{{holdOrgData}}" wx:key="*this" wx:for-index = "index">
+                <view class="holdList-li" bindtap="linkOrgDetail" data-name="{{item.staffname}}" data-filecount="{{item.filecount}}">
+                  <view class="holdWidth_1">{{item.staffname}}</view>
+                  <view class="holdWidth_2">{{item.casecount}}</view>
+                  <view class="holdWidth_3">{{item.filecount}}</view>
+                </view>
+            </block>
+            <view class="holdList-li positionBottom">
+              <view class="holdWidth_1">合计</view>
+              <view class="holdWidth_2">{{orgCaseAll}}</view>
+              <view class="holdWidth_3">{{orgFileAll}}</view>
+            </view>
+        </view>
+        <view wx:else class="noMsg">
+            <view>暂无数据</view>
+        </view>
+    </view>
+</view>

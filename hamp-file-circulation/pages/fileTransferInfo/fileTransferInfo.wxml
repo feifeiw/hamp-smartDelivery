@@ -1,0 +1,36 @@
+<!--pages/files/files.wxml-->
+<view class="IndexWrapper">
+    <!-- 头部 -->
+    <view class="tranferTop">
+      <view class="caseNo">
+        <text class="fl">{{caseBaseInfo.caseNO}}</text>
+        <text class="fr">共{{filecount}}卷</text>
+      </view>
+      <view class="caseInfo">
+        <view class="caseInfo-li">
+          <label>案  由：</label>
+          <view>{{caseBaseInfo.cause}}</view>
+        </view>
+        <view class="caseInfo-li">
+          <label>承办部门：</label>
+          <view>{{caseBaseInfo.undertakeorg}}</view>
+        </view>
+        <view class="caseInfo-li">
+          <label>承 办 人：</label>
+          <view>{{caseBaseInfo.undertaker}}</view>
+        </view>
+        <view class="caseInfo-li">
+          <label>立案日期：</label>
+          <view>{{caseBaseInfo.regdate}}</view>
+        </view>
+        <view class="caseInfo-li">
+          <label>当 事 人：</label>
+          <view>{{caseBaseInfo.clients}}</view>
+        </view>
+        <view class="caseInfo-li">
+          <label>备  注：</label>
+          <view>{{caseBaseInfo.memo}}</view>
+        </view>
+      </view>
+    </view>
+</view>

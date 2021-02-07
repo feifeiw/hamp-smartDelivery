@@ -1,0 +1,36 @@
+<!--pages/files/files.wxml-->
+<view class="IndexWrapper">
+    <!-- 头部 -->
+    <view class="tranferTop" bindtap="linkTransBaseInfo">
+      <view class="caseNo">
+        <text class="fl">{{fileNO}}</text>
+        <text class="fr">共{{filecount}}卷</text>
+      </view>
+      <view class="caseInfo">
+        <view>持有部门：{{caseInfo.holderorg}}</view>
+        <view>持有人：{{caseInfo.holder}}</view>
+      </view>
+      <view class="arrow_right">
+        <image src="../../static/image/arrow_right.png"></image>
+      </view>
+    </view>
+    <!-- 列表 -->
+    <view class="tranferInfo">
+      <block wx:for="{{tranferInfo}}" wx:key="*this">
+        <view class='weui-cell-list'>
+          <view class='weui-cell-circle'></view>
+          <view class='weui-cell-line'>
+            <view class="'weui-cell-content">
+              <view class='weui-cell-name'>{{item.holder}}</view>
+              <view class='weui-cell-event'>持有人部门：{{item.orgname || '无'}}</view>
+              <view class='weui-cell-event'>接受时间：{{item.receivedate || '无'}}</view>
+              <view class='weui-cell-event'>持有时长：{{item.holdtime || '无'}}</view>
+              <view class='phone' bindtap='toCall' data-phone="{{item.mobile}}">
+                <image src="../../static/image/phone.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+</view>

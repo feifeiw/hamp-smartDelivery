@@ -1,6 +1,12 @@
 {
   "pages":[
     "pages/signFor/signFor",
+    "pages/fileHold/fileHold",
+    "pages/fileHoldMan/fileHoldMan",
+    "pages/fileHoldManDetail/fileHoldManDetail",
+    "pages/searchFiles/searchFiles",
+    "pages/fileTransferInfo/fileTransferInfo",
+    "pages/fileTransfer/fileTransfer",
     "pages/files/files",
     "pages/user/user",
     "pages/register/register",
@@ -27,6 +33,16 @@
       "text": "我的卷宗",
       "iconPath": "static/image/file.png",
       "selectedIconPath": "static/image/file_select.png"
+    },{
+      "pagePath": "pages/searchFiles/searchFiles",
+      "text": "卷宗查询",
+      "iconPath": "static/image/chaxun.png",
+      "selectedIconPath": "static/image/chaxun_select.png"
+    },{
+      "pagePath": "pages/fileHold/fileHold",
+      "text": "持有统计",
+      "iconPath": "static/image/tongji.png",
+      "selectedIconPath": "static/image/tongji_select.png"
     },{
       "pagePath": "pages/user/user",
       "text": "我的",
