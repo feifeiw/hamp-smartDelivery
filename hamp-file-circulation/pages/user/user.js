@@ -27,7 +27,6 @@ Page({
 			})
 		} else {
       // 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
-      console.log('调用app.js定义callback')
 			app.userInfoLoadCallback = userInfo => {
         console.log('调用callback', userInfo)
 				if (userInfo != '') {
@@ -106,7 +105,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 2
+      })
+    }
   },
 
   /**

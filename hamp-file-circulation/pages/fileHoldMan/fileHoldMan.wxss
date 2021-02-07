@@ -1,7 +1,6 @@
 /* pages/files/files.wxss */
 .IndexWrapper{
   padding-top: 170rpx;
-  height: 100%;
 }
 .holdTop{
   line-height: 90rpx;

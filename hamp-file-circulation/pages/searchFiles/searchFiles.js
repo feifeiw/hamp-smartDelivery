@@ -1,9 +1,7 @@
 // pages/files/files.js
 const app = getApp();
-let until = require('../../utils/util')
 let that = this;
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -12,16 +10,7 @@ Page({
 		paddTop: '100',
 		roldAuth: '',
 		detailArr: [],
-		testData: [
-			{
-        "caseNO": "（2021）冀05民终78号",
-        "caseID": "33809",
-				"filecount": "3",
-				showIndex: false
-    	}
-		],
-		transflag: 0,
-		yearArr: [2020, 2019, 2018],
+		yearArr: [2021, 2020, 2019],
 		index: 0,
 		caseValue: '',
 		caseNO: ''
@@ -33,7 +22,6 @@ Page({
   onLoad: function (options) {
 		that = this;
 		that.clearCache() //清本页缓存
-    let time = until.formatTime(new Date())
     this.setData({
       OPEN_ID: app.globalData.OPEN_ID,
       wxlogin: app.wxlogin,
@@ -54,7 +42,8 @@ Page({
   // 清除当前页缓存
   clearCache() {
 	  that.setData({
-			dataArr: [],
+			dataArr: '',
+			detailArr: ''
 	  })
   },
 	// 点击展开/收起详情
@@ -62,7 +51,6 @@ Page({
 		let that = this;
 		let index = e.currentTarget.dataset.index;
 		let _caseno = e.currentTarget.dataset.caseno
-		console.log(index, _caseno)
 		let _startStatus = that.data.dataArr[index].showIndex
 		that.data.dataArr.map(item => {
 			item.showIndex = false
@@ -85,6 +73,9 @@ Page({
 	// 获取详情
 	getCasefile(_caseno) {
 		wx.showLoading()
+		that.setData({
+			detailArr: '',
+		})
 		wx.request({
 			url: 'https://51jka.com.cn/wxCirculation/getCasefile2',
 			data: {
@@ -95,7 +86,6 @@ Page({
 			method: 'GET',
 			success: function(res) {
 				wx.hideLoading();
-				console.log(res.data)
 				if (res.data) {
 					that.setData({
 						detailArr: res.data,
@@ -117,6 +107,9 @@ Page({
     wx.showLoading({
 			title: '查询中',
 		})
+		that.setData({
+			dataArr: '',
+		})
 		let retcode = wx.getStorageSync('retcode');
 		if (retcode == 0) {
 			wx.request({
@@ -129,30 +122,21 @@ Page({
 				},
 				method: 'GET',
 				success: function(res) {
-					if (res.data.rows) {
-						const _data = res.data.rows
+					wx.hideLoading();
+					if (res.data) {
+						const _data = res.data
 						_data.map(item => item.showIndex = false)
 						that.setData({
-							dataArr: _data,
+							dataArr: _data
 						})
-						wx.hideLoading();
-					} else {
-						wx.hideLoading();
 					}
-					that.setData({
-						dataArr: that.data.testData,
-					})
 				},
 				fail: function(res) {
-					//隐藏loading
 					wx.hideLoading();
 					wx.showToast({
 						title: '查询失败，请检查网络！',
 						icon: 'none',
-						mask: true,
-						success: function(res) {},
-						fail: function(res) {},
-						complete: function(res) {},
+						mask: true
 					})
 				}
 			})
@@ -189,7 +173,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+		if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+			this.getTabBar().setData({
+				selected: 0
+			})
+    }
   },
 
   /**

@@ -48,6 +48,9 @@
 .borderBt{
   background: #fff;
   padding: 0 26rpx;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
 }
 .tabList .tabLi{
   background: #fff;
@@ -68,7 +71,7 @@
 }
 .tabList .tabLi .detail{
   padding: 0 20rpx 20rpx 20rpx;
-  margin: 0;
+  margin: 0 0 30rpx 0;
   box-sizing: border-box;
   width: 100%;
 }

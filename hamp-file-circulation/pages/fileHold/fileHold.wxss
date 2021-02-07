@@ -1,7 +1,6 @@
 /* pages/files/files.wxss */
 .IndexWrapper{
   padding-top: 110rpx;
-  height: 100%;
 }
 .holdTop{
   height: 90rpx;
@@ -22,7 +21,7 @@
   color: #000;
 }
 .holdList{
-  padding: 20rpx 30rpx 0 30rpx;
+  padding: 20rpx 30rpx 96rpx 30rpx;
   background: #fff;
   font-size: 30rpx;
   height: calc(100vh - 110rpx);
@@ -46,7 +45,7 @@
 }
 .positionBottom{
   position: fixed;
-  bottom: 0;
+  bottom: 96rpx;
   left: 0;
   width: 100%;
   z-index: 99;

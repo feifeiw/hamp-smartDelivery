@@ -11,15 +11,6 @@ Page({
     dataArr: [], // 列表
 		paddTop: '100',
 		roldAuth: '',
-		testArr: [
-			{
-        "holder": "林华安",
-        "orgname": "汉普辅助",
-        "receivedate": "2021-01-27 14:15",
-        "holdtime": null,
-        "mobile": "18331910301"
-      }
-		],
 		tranferInfo: [],
 		fileNO: '',
 		caseInfo: '',
@@ -32,7 +23,6 @@ Page({
    */
   onLoad: function (options) {
 		that = this;
-		console.log(options.fileNO)
     that.setData({
       OPEN_ID: app.globalData.OPEN_ID,
 			wxlogin: app.wxlogin,
@@ -41,7 +31,6 @@ Page({
 			filecount: options.filecount,
 			caseNO: options.caseNO
 		})
-		console.log(options)
     that.getFileTransferInfo()
 	},
   // 获取卷宗流转信息

@@ -22,7 +22,6 @@ Page({
 		paddTop: '100',
 		roldAuth: '',
 		detailArr: [],
-		testData: [],
 		transflag: 0
   },
 
@@ -139,7 +138,6 @@ Page({
 			method: 'GET',
 			success: function(res) {
 				wx.hideLoading();
-				console.log(res.data)
 				if (res.data) {
 					that.setData({
 						detailArr: res.data,
@@ -172,7 +170,6 @@ Page({
 			method: 'GET',
 			success: function(res) {
 				wx.hideLoading();
-				console.log(res.data)
 				if (res.data) {
 					that.setData({
 						detailArr: res.data,
@@ -338,7 +335,6 @@ Page({
 							updateLoadText: '上拉加载更多'
 						})
 					} else {
-						//隐藏loading
 						wx.hideLoading();
 						that.setData({
 							uploadFlag: false,
@@ -389,13 +385,12 @@ Page({
 			method: 'GET',
 			success: function(res) {
 				wx.hideLoading();
-				// if (res.data) {
 				wx.showToast({
 					title: '操作成功！',
 					icon: 'success',
 					mask: true
 				})
-				// }
+				this.getHoldList(); // 刷新
 			},
 			fail: function(res) {
 				wx.hideLoading();
@@ -418,7 +413,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+		if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+				selected: 1
+      })
+    }
   },
 
   /**
@@ -454,7 +454,6 @@ Page({
 		if (that.data.activeIndex == 0) {
 			that.getSingInList()
 		} else if (that.data.activeIndex == 1) {
-			console.log('加载', that.data.activeIndex)
 			that.getRollOutList()
 		} else if (that.data.activeIndex == 2) {
 			that.getHoldList()

@@ -1,5 +1,4 @@
 // pages/register/register.js
-const wxMd5 = require('../../utils/md5.js')
 var app = getApp();
 Page({
   /**
@@ -151,9 +150,6 @@ Page({
       }, 1000);
       return false
     }
-    let _password = wxMd5.md5(formObj.password).toLocaleUpperCase(); // md5加密同时toLocaleUpperCase小写转大写 
-    console.log(formObj.accountNO, formObj.password)
-    // return
     wx.showLoading({
       title: '注册中...',
     })
@@ -214,7 +210,6 @@ Page({
     let that = this
     let formObj = e.detail.value
     let sessionId = wx.getStorageSync('sessionId')
-    console.log(wx.getStorageSync('appCourtid'))
     if (!formObj.phoneNumber || !formObj.name || !formObj.verificationCode) {
       this.setData({errMsg: '请填写完整信息！'})
       setTimeout(() => {
@@ -225,7 +220,6 @@ Page({
     wx.showLoading({
       title: '注册中...',
     })
-    console.log('注册入参', e.detail.value)
     wx.request({
       url: 'https://51jka.com.cn/wxCourt/saveUser',
       data: {

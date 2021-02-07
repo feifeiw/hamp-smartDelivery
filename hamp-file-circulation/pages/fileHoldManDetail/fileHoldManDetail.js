@@ -77,7 +77,6 @@ Page({
 			method: 'GET',
 			success: function(res) {
 				wx.hideLoading();
-				console.log(res.data)
 				if (res.data) {
 					that.setData({
 						detailArr: res.data,

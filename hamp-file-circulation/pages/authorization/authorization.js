@@ -99,13 +99,43 @@ Page({
 							wx.setStorageSync('staffid',res.data.wxlogin.staffid)
 							wx.setStorageSync('retcode',res.data.wxlogin.retcode)
 							wx.setStorageSync('retmessage',res.data.wxlogin.retmessage)
-							// 跳转首页并onLoad
-							wx.switchTab({
-								url: '/pages/signFor/signFor',
-								success: function(e) {
-									let page = getCurrentPages().pop();
-									if (page == undefined || page == null) return;
-									page.onLoad();
+							// 获取权限标识
+							wx.showLoading({
+								title: '获取权限标识...',
+							})
+							wx.request({
+								url: 'https://51jka.com.cn/wxCirculation/getAuth',
+								data: {
+									courtid: res.data.wxlogin.courtid,
+									staffid: res.data.wxlogin.staffid
+								},
+								method: 'GET',
+								success: function(data) {
+									wx.hideLoading();
+									if (!data.statusCode == 200) return
+									wx.setStorageSync('userAuth', data.data.data)
+									let _rolePath = ''
+									if (data.data.data.role == 2) {
+										_rolePath = '/pages/searchFiles/searchFiles'
+									} else {
+										_rolePath = '/pages/signFor/signFor'
+									}
+									wx.switchTab({
+										url: _rolePath,
+										success: function(e) {
+											let page = getCurrentPages().pop();
+											if (page == undefined || page == null) return;
+											page.onLoad();
+										}
+									})
+								},
+								fail: function(err) {
+									wx.hideLoading();
+									wx.showToast({
+										title: '获取权限标识失败，请重试！',
+										icon: 'none',
+										mask: true
+									})
 								}
 							})
 						},

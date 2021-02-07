@@ -18,15 +18,15 @@
                     <view class="title" bindtap="getDetail" data-index="{{index}}" data-caseno="{{item.caseNO}}">
                       <text class="fl">{{item.caseNO}}</text>
                       <view class="fr">
-                        <text>共{{item.filecount}}卷</text>
+                        <text style="color:#999;">共{{item.filecount}}卷</text>
                         <view class="arrowIcon"><image src="../../static/image/{{item.showIndex == false ? 'arrow_right':'arrow_down'}}.png"></image></view>
                       </view>
                     </view>
                     <view class="detail" wx:if="{{item.showIndex == true}}">
-                      <view class="detail_li" wx:for="{{detailArr}}" wx:key="*this" wx:for-item="detail" bindtap="linkCirculation" data-fileno="{{detail.fileNO}}" data-case="{{detail}}" data-count="{{item.filecount}}">
+                      <view class="detail_li" wx:for="{{detailArr}}" wx:key="*this" wx:for-item="detail" catchtap="linkCirculation" data-fileno="{{detail.fileNO}}" data-case="{{detail}}" data-count="{{item.filecount}}">
                         <view class="fileNO">{{detail.fileNO}}</view>
                         <view class="transdate">
-                          <text>{{detail.holder}}</text>
+                          <text>{{detail.holder || '无'}}</text>
                           <image src="../../static/image/time.png" class="linCirculImg"></image>
                         </view>
                       </view>

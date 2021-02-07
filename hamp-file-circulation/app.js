@@ -6,6 +6,7 @@ App({
 	},
   onLaunch: function () {
     const that = this
+    wx.hideTabBar();
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -25,7 +26,7 @@ App({
     wx.login({
       success: resOne => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log('登陆信息', resOne)
+        // console.log('登陆信息', resOne)
         wx.getSetting({
           success: resTwo => {
             if (resTwo.authSetting['scope.userInfo']) {
@@ -33,7 +34,7 @@ App({
               wx.getUserInfo({
                 success: resThree => {
                   // 可以将 res 发送给后台解码出 unionId
-                  console.log('globalData.userInfo', resThree.userInfo)
+                  // console.log('globalData.userInfo', resThree.userInfo)
                   that.globalData.userInfo = resThree.userInfo
                   if (that.userInfoLoadCallback) {
                     that.userInfoLoadCallback(resThree.userInfo)
@@ -56,7 +57,7 @@ App({
                     timeout: 30000,
                     method: 'GET',
                     success: function(res) {
-                      console.log('openid', JSON.parse(res.data.data))
+                      // console.log('openid', JSON.parse(res.data.data))
                       if (res.data.result) {
                         let jsonObj = JSON.parse(res.data.data); //json字符串转json对象
                         wx.setStorageSync('avatarUrl',jsonObj.avatarUrl)
@@ -102,9 +103,18 @@ App({
                             method: 'GET',
                             success: function(data) {
                               wx.hideLoading();
-                              console.log('权限标识', data.data)
+                              // console.log('权限标识', data.data)
                               if (!data.statusCode == 200) return
                               wx.setStorageSync('userAuth', data.data.data)
+                              if (data.data.data.role == 2) {
+                                wx.switchTab({
+                                  url: '/pages/searchFiles/searchFiles',
+                                })
+                              } else {
+                                wx.switchTab({
+                                  url: '/pages/signFor/signFor',
+                                })
+                              }
                             },
                             fail: function(err) {
                               wx.hideLoading();

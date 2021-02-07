@@ -18,7 +18,6 @@ Page({
    */
   onLoad: function (options) {
 		that = this;
-		console.log(options)
     that.setData({
       OPEN_ID: app.globalData.OPEN_ID,
 			wxlogin: app.wxlogin,
@@ -48,7 +47,6 @@ Page({
 							caseBaseInfo: res.data[0],
 						})
 					}
-					console.log(that.data.caseBaseInfo)
 				},
 				fail: function(res) {
 					//隐藏loading

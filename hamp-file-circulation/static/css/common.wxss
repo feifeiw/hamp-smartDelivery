@@ -5,10 +5,22 @@
 .fr{
   float: right;
 }
+/* 搜索按钮 */
+.searchBtn{
+  float: right;
+  background: #5275f5;
+  color: #fff;
+  border-radius: 40rpx !important;
+  padding: 8rpx 20rpx !important;
+  font-size: 30rpx !important;
+  width: 120rpx !important;
+  font-weight: normal !important;
+  margin-top: 24rpx;
+}
 .IndexWrapper{
   width: 750rpx;
-  min-height: 1000rpx;
-  background: #f9f9f9;
+  min-height: 100vh;
+  background: #f1f1f1;
   position: relative;
   box-sizing: border-box;
 }
@@ -23,8 +35,9 @@
   box-sizing: border-box;
 }
 .tranferInfo{
-  padding: 30rpx;
+  padding: 30rpx 30rpx 100rpx 30rpx;
   width: 100%;
+  min-height: calc(100vh - 120rpx);
   background: #fff;
   box-sizing: border-box;
 }
@@ -39,7 +52,7 @@
   background: #fff;
 }
 .weui-cell-content{
-  background: #f9f9f9;
+  background: #f1f1f1;
   border-radius: 8rpx;
   padding: 16rpx 30rpx;
   box-sizing: border-box;
@@ -109,8 +122,8 @@
   display: flex;
 }
 .caseInfo-li label{
-  width: 145rpx;
-  flex: 0 0 145rpx;
+  width: 160rpx;
+  flex: 0 0 160rpx;
 }
 .caseInfo-li view{
   width: auto;
@@ -149,7 +162,7 @@
   margin: 0;
   box-sizing: border-box;
   width: 100%;
-  background: #f9f9f9;
+  background: #f1f1f1;
   border-radius: 6rpx;
   margin-bottom: 18rpx;
 }
@@ -160,7 +173,7 @@
   display: block;
   width: 100%;
   font-size: 28rpx;
-  border-bottom: 2rpx dashed #f1f1f1;
+  border-bottom: 2rpx dashed #d7d7d7;
   margin: 0;
   box-sizing: border-box;
 }
