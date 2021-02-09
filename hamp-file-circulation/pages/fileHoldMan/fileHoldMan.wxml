@@ -13,7 +13,7 @@
     <view class="holdList">
         <view wx:if="{{holdOrgData.length > 0}}"  class="borderBt">
             <block wx:for="{{holdOrgData}}" wx:key="*this" wx:for-index = "index">
-                <view class="holdList-li" bindtap="linkOrgDetail" data-name="{{item.staffname}}" data-filecount="{{item.filecount}}">
+                <view class="holdList-li" bindtap="linkOrgDetail" data-item="{{item}}">
                   <view class="holdWidth_1">{{item.staffname}}</view>
                   <view class="holdWidth_2">{{item.casecount}}</view>
                   <view class="holdWidth_3">{{item.filecount}}</view>

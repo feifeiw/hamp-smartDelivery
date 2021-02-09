@@ -49,7 +49,6 @@ Page({
 				method: 'GET',
 				success: function(res) {
 					wx.hideLoading();
-					console.log(res.data)
 					if (res.data) {
 						let _casenum = 0
 						let _filenum = 0

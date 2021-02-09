@@ -48,7 +48,7 @@ Component({
         this.setData({
           list: this.data.allList[0].list1
         })
-      }else if(userAuth.role == 2){
+      } else {
         this.setData({
           list: this.data.allList[0].list2
         })

@@ -13,7 +13,8 @@ Page({
 		uploadFlag: true,
 		pageNum: 1,
 		paddTop: '100',
-		filecount: ''
+		filecount: '',
+		detailItem: ''
   },
 
   /**
@@ -25,9 +26,8 @@ Page({
     that.setData({
       OPEN_ID: app.globalData.OPEN_ID,
 			wxlogin: app.wxlogin,
-			staffname: options.staffname,
-			filecount: options.filecount
-    })
+			detailItem: JSON.parse(options.detailItem)
+		})
     that.getHoldList()
 	},
 
@@ -70,7 +70,7 @@ Page({
 			url: 'https://51jka.com.cn/wxCirculation/gethold2',
 			data: {
 				courtid: wx.getStorageSync('courtid'),
-				staffid: wx.getStorageSync('staffid'),
+				staffid: that.data.detailItem.staffID,
 				caseNO: _caseno
 			},
 			method: 'GET',
@@ -103,7 +103,7 @@ Page({
         url: 'https://51jka.com.cn/wxCirculation/gethold',
 				data: {
 					courtid: wx.getStorageSync('courtid'),
-					staffid: wx.getStorageSync('staffid'),
+					staffid: that.data.detailItem.staffID,
 					pageSize: 10,
 					pageNum: that.data.pageNum
 				},

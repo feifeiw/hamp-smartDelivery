@@ -32,15 +32,18 @@
             <block wx:for="{{dataArr}}" wx:key="*this" wx:for-index = "index">
                 <view class="tabLi">
                     <view class="title" bindtap="ShowDetail" data-index="{{index}}" data-caseno="{{item.caseno}}">
-                      <text class="fl">{{item.caseno}}</text>
-                      <view class="fr">
+                      <text class="fl" style="width:78%;overflow: hidden;">{{item.caseno}}</text>
+                      <view class="fr" style="width:22%;">
                         <text>{{item.filecount}}/{{item.filecount0}}</text>
                         <view class="arrowIcon"><image src="../../static/image/{{item.showIndex == false ? 'arrow_right':'arrow_down'}}.png"></image></view>
                       </view>
                     </view>
                     <view class="detail" wx:if="{{item.showIndex == true}}">
                       <view class="detail_li" wx:for="{{detailArr}}" wx:key="*this" wx:for-item="detail">
-                        <view class="fileNO">{{detail.fileNO}}</view>
+                        <view class="fileNO">
+                          <text class="ellipse" wx:if="{{detail.fileNO.length > 25}}">...</text>
+                            <text class="text">{{detail.fileNO}}</text>
+                        </view>
                         <view class="transdate">
                           <text wx:if="{{activeIndex != 2}}">{{detail.transdate}}</text>
                           <text wx:if="{{activeIndex == 2}}">共持有{{detail.holddays}}</text>

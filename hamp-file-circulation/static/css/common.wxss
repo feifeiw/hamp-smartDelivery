@@ -178,15 +178,18 @@
   box-sizing: border-box;
 }
 .tabList .tabLi .detail_li .fileNO{
-  width: 76%;
+  width: 72%;
   overflow: hidden;
   float: left;
   display: inline-block;
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis; */
   white-space: nowrap;
 }
+.fileNO .ellipse{
+  float: left;
+}
 .tabList .transdate{
-  width: 24%;
+  width: 28%;
   overflow: hidden;
   float: left;
   text-align: right;

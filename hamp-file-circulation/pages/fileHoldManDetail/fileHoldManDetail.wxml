@@ -2,7 +2,7 @@
 <view class="IndexWrapper">
     <!-- 头部 -->
     <view class="holdTop tabcontent">
-      <view class="txtCenter">【{{staffname}}】持有统计（{{filecount}}）</view>
+      <view class="txtCenter">【{{detailItem.staffname}}】持有统计（{{detailItem.filecount}}）</view>
     </view>
     <!-- 列表 -->
     <!-- <view class="holdList"> -->
@@ -11,15 +11,18 @@
               <block wx:for="{{dataArr}}" wx:key="*this" wx:for-index = "index">
                   <view class="tabLi">
                       <view class="title" bindtap="ShowDetail" data-index="{{index}}" data-caseno="{{item.caseno}}">
-                        <text class="fl">{{item.caseno}}</text>
-                        <view class="fr">
+                        <text class="fl" style="width:78%;overflow: hidden;">{{item.caseno}}</text>
+                        <view class="fr" style="width:22%;">
                           <text>{{item.filecount}}/{{item.filecount0}}</text>
                           <view class="arrowIcon"><image src="../../static/image/{{item.showIndex == false ? 'arrow_right':'arrow_down'}}.png"></image></view>
                         </view>
                       </view>
                       <view class="detail" wx:if="{{item.showIndex == true}}">
                         <view class="detail_li" wx:for="{{detailArr}}" wx:key="*this" wx:for-item="detail" bindtap="linkCirculation" data-fileno="{{detail.fileNO}}" data-case="{{detail}}" data-count="{{item.filecount}}">
-                          <view class="fileNO">{{detail.fileNO}}</view>
+                          <view class="fileNO">
+                            <text class="ellipse" wx:if="{{detail.fileNO.length > 25}}">...</text>
+                            <text class="text">{{detail.fileNO}}</text>
+                          </view>
                           <view class="transdate">
                             <text>持有{{detail.holddays}}</text>
                             <image src="../../static/image/time.png" class="linCirculImg"></image>

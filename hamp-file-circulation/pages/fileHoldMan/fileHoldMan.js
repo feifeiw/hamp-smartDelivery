@@ -91,10 +91,9 @@ Page({
 	},
 	// 跳转流转过程
 	linkOrgDetail(e) {
-		let staffname = e.currentTarget.dataset.name
-		let filecount = e.currentTarget.dataset.filecount
+		let item = JSON.stringify(e.currentTarget.dataset.item)
 		wx.navigateTo({
-			url: '../fileHoldManDetail/fileHoldManDetail?staffname=' + staffname+'&filecount='+filecount
+			url: '../fileHoldManDetail/fileHoldManDetail?detailItem=' + item
 		})
 	},
   /**
