@@ -1,0 +1,23 @@
+/* pages/fileTransfer/fileTransfer.wxss */
+.IndexWrapper{
+  position: relative;
+}
+.recall{
+  width: 60%;
+  padding: 16rpx 0;
+  text-align: center;
+  color: #fff;
+  border-radius: 8rpx;
+  position: fixed;
+  left: 20%;
+  font-size: 32rpx;
+  bottom: 30rpx;
+  background: #5275f5;
+  z-index: 999;
+}
+.recall image{
+  width: 34rpx;
+  height: 34rpx;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}

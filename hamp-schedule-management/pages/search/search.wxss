@@ -1,0 +1,88 @@
+/* pages/search/search.wxss */
+.searchBtn{
+  float: right;
+  background: #5275f5;
+  color: #fff;
+  border-radius: 40rpx !important;
+  padding: 8rpx 20rpx !important;
+  font-size: 30rpx !important;
+  width: 120rpx !important;
+  font-weight: normal !important;
+  margin-top: 24rpx;
+}
+.IndexWrapper{
+  width: 750rpx;
+  min-height: 100vh;
+  background: #f1f1f1;
+  position: relative;
+  box-sizing: border-box;
+}
+.tabcontent {
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #f2f2f2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  box-sizing: border-box;
+}
+.tabList{
+  padding-top: 120rpx;
+}
+.tabList .tabLi{
+  width: 100%;
+  background: #fff;
+  margin-bottom: 12rpx;
+  font-size: 30rpx;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  line-height: 60rpx;
+}
+.picker_group {
+  height: 90rpx;
+  width: 100%;
+  line-height: 90rpx;
+  font-size: 30rpx;
+  color: #999;
+  background: #fff;
+  display: inline-block;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+.picker_group .casePicker, .yearPicker {
+  color: #999;
+  height: 70rpx;
+  line-height: 70rpx;
+  padding: 0 14rpx;
+  display: inline-block;
+  border-radius: 6rpx;
+  background: #f1f1f1;
+  width: 66%;
+  margin-top: 16rpx;
+  float: left;
+  box-sizing: border-box;
+}
+.operate{
+  width: 100%;
+  display: inline-block;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+}
+.operate .display-block{
+  display: inline-block;
+  text-align: center;
+}
+.operate .display-block image{
+  height: 40rpx;
+  width: 40rpx;
+  vertical-align: middle;
+  margin-right: 12rpx;
+}
+.txtBlue{
+  color: #5275f5;
+}
+.txtRed{
+  color: #f74f4d;
+}

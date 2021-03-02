@@ -1,0 +1,41 @@
+<!--pages/files/files.wxml-->
+<view class="IndexWrapper">
+    <!-- 头部 -->
+    <view class="tranferTop" bindtap="linkTransBaseInfo">
+      <view class="caseNo">
+        <text class="fl">{{caseInfo.caseNO}}</text>
+      </view>
+      <view class="caseInfo">
+        <view>案号：{{caseInfo.caseNO}}</view>
+        <view>案由：{{caseInfo.cause}}</view>
+      </view>
+      <view class="arrow_right">
+        <image src="../../static/image/arrow_right.png"></image>
+      </view>
+    </view>
+    <view class="recall" bindtap="getReschedule" data-item="{{item}}" wx:if="{{tranferInfo.length > 0}}">
+      <image src="../../static/image/recall.png"></image>
+      <text>撤回重排</text>
+    </view>
+    <!-- 列表 -->
+    <view class="tranferInfo">
+      <block wx:for="{{tranferInfo}}" wx:key="*this">
+        <view class='weui-cell-list'>
+          <view class='weui-cell-circle'></view>
+          <view class='weui-cell-line'>
+            <view class="'weui-cell-content">
+              <view class='weui-cell-name'>{{item.holder}}</view>
+              <view class='weui-cell-event'>法庭：{{item.courtroom || '无'}}</view>
+              <view class='weui-cell-event'>开庭日期：{{item.courtdate || '无'}}</view>
+              <view class='weui-cell-event'>开庭时间：{{item.courttime || '无'}}</view>
+              <view class='weui-cell-event'>排期人：{{item.scheduleopr || '无'}}</view>
+              <view class='weui-cell-event'>排期人联系电话：{{item.scheduleoprmobile || '无'}}</view>
+              <view class='phone' bindtap='toCall' data-phone="{{item.scheduleoprmobile}}">
+                <image src="../../static/image/phone.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+</view>

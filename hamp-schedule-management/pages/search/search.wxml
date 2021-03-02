@@ -1,0 +1,24 @@
+<!--pages/search/search.wxml-->
+<view class="IndexWrapper">
+    <!-- 头部 -->
+    <view class="tabcontent">
+      <view class="picker_group">
+        <input class="weui-input casePicker" name="caseNO" placeholder="请输入案号" type="text" bindinput="bindKeyInput"/>
+         <button class="searchBtn" bindtap="getCaseList">查询</button>
+      </view>
+    </view>
+    <!-- 列表 -->
+    <view class="tabList">
+        <view wx:if="{{dataArr.length > 0}}"  class="borderBt">
+            <block wx:for="{{dataArr}}" wx:key="*this" wx:for-index = "index" >
+                <view class="tabLi" bindtap="linkTransBase" data-item="{{item}}">
+                    <view>案号：<text class="color_9">{{item.caseNO}}</text></view>
+                    <view>案由：<text class="color_9">{{item.cause}}</text></view>
+                </view>
+            </block>
+        </view>
+        <view wx:else class="noMsg">
+            <view>暂无数据</view>
+        </view>
+    </view>
+</view>

@@ -89,13 +89,45 @@
   line-height: 50rpx;
   box-sizing: border-box;
   margin-bottom: 14rpx;
+  position: relative;
 }
 .noteLi_block{
   width: 100%;
   display: inline-block;
 }
+.recall{
+  position: absolute;
+  right: 20rpx;
+  top: 20rpx;
+  color: #5275f5;
+}
+.recall image{
+  width: 34rpx;
+  height: 34rpx;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
 .heightAuto image{
   transition: width 2s; 
   -webkit-transition: width 2s;
   transform: rotate(0deg) !important;
+}
+/* 撤销申请 */
+.raletive{
+  position: relative;
+}
+.revoke{
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 34rpx;
+}
+.revoke image{
+  width: 50rpx;
+  height: 50rpx;
+  vertical-align: middle;
+  margin: -4rpx 6rpx 0 0;
+}
+.revoke text{
+  color: #ff6565;
 }

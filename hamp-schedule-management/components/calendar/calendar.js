@@ -47,7 +47,17 @@ Component({
     getToDay() {
       const dataArr = this.monthDay(this.data.y, this.data.m)
       dataArr.map(item => {
-        const _day = `${item.year}-${item.month + 1}-${item.date}`
+        let _month = ''
+        let _date = item.date
+        if (item.month < 10) {
+          _month = `0${item.month + 1}`
+        } else {
+          _month = item.month + 1
+        }
+        if (item.date < 10) {
+          _date = `0${item.date}`
+        }
+        const _day = `${item.year}-${_month}-${_date}`
         if (this.data.Today == _day) {
           item.isDay = true
         }

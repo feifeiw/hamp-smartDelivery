@@ -1,0 +1,161 @@
+.IndexWrapper{
+  width: 750rpx;
+  min-height: 100vh;
+  background: #f1f1f1;
+  position: relative;
+  box-sizing: border-box;
+}
+.leaveWrapper{
+  width: 750rpx;
+  min-height: 100vh;
+  background: #f4f4f4;
+  box-sizing: border-box;
+}
+.formContent{
+  width: 100%;
+}
+.section{
+  margin-bottom: 12rpx;
+  width: 100%;
+  background: #fff;
+  padding: 0 30rpx;
+  font-size: 30rpx;
+}
+.section .section__title{
+  padding-top: 20rpx;
+}
+.itembox{
+  padding: 20rpx 0;
+}
+.itembox .textarea{
+  height: 200rpx;
+}
+.btn-area{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  padding: 30rpx 0;
+  text-align: center;
+  z-index: 9999;
+}
+.btn-area button{
+  width: 85% !important;
+  font-size: 36rpx !important;
+  padding: 16rpx 0 !important;
+  font-weight: normal;
+  color: #fff;
+  background: #5275f5;
+}
+.color_9{
+  color: #999;
+}
+.marginr_2{
+  margin-right: 20rpx;
+}
+textarea{
+  color: #999;
+}
+/* 案件流转 */
+.tranferTop{
+  width: 100%;
+  background: #fff;
+  margin-bottom: 16rpx;
+  box-sizing: border-box;
+  padding: 40rpx;
+  border-top: 2rpx solid #f1f1f1;
+  position: relative;
+}
+.tranferTop .caseNo{
+  font-size: 32rpx;
+  width: 100%;
+  display: inline-block;
+}
+.tranferTop .caseNo .fl{
+  width: 80%;
+}
+.tranferTop .caseInfo{
+  font-size: 30rpx;
+  color: #999;
+  line-height: 50rpx;
+  margin-top: 20rpx;
+}
+.tranferTop .arrow_right{
+  position: absolute;
+  right: 40rpx;
+  top: 120rpx;
+}
+.tranferTop .arrow_right image{
+  height: 30rpx;
+  width: 30rpx;
+}
+.tranferInfo{
+  padding: 30rpx 30rpx 100rpx 30rpx;
+  width: 100%;
+  min-height: calc(100vh - 120rpx);
+  background: #fff;
+  box-sizing: border-box;
+}
+.weui-cell-list{
+  background: #fff;
+  padding: 0 50rpx;
+}
+.weui-cell-line{
+  margin-left: 16rpx;
+  border-left: 1px solid #f1f1f1;
+  padding: 0 0 20rpx 20rpx;
+  background: #fff;
+}
+.weui-cell-content{
+  background: #f1f1f1;
+  border-radius: 8rpx;
+  padding: 16rpx 30rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+.phone{
+  position: absolute;
+  right: 28rpx;
+  top: 28rpx;
+}
+.phone image{
+  width: 54rpx;
+  height: 54rpx;
+}
+.weui-cell-circle{
+  border: 6rpx solid #5275f5;
+  border-radius: 50%;
+  width: 20rpx;
+  height: 20rpx;
+  background: #fff;
+}
+.weui-cell-event{
+  line-height: 54rpx;
+  font-size: 30rpx;
+  color: #999;
+}
+.weui-cell-name{
+  font-size:34rpx;
+  margin: 20rpx 0;
+}
+/* 流转-案件信息 */
+.caseInfo-li{
+  width: 100%;
+  display: flex;
+}
+.caseInfo-li label{
+  width: 160rpx;
+  flex: 0 0 160rpx;
+}
+.caseInfo-li view{
+  width: auto;
+  float: 0 0 1;
+  text-align:left;
+}
+.noMsg{
+  text-align: center;
+  margin-top: 180rpx;
+  font-size: 34rpx;
+  color: #999;
+}

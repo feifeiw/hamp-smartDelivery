@@ -1,0 +1,26 @@
+<!--pages/recall/recall.wxml-->
+<view class="leaveWrapper">
+  <form catchsubmit="returnSubmit" class="formContent">
+    <view class="section">
+      <view class="itembox">
+        <text class="marginr_2">案号</text>
+        <text class="color_9">{{detailItem.caseNO}}</text>
+      </view>
+    </view>
+    <view class="section">
+      <view class="itembox">
+        <text class="marginr_2">案由</text>
+        <text class="color_9">{{detailItem.cause}}</text>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section__title">备注</view>
+      <view class="itembox">
+        <textarea placeholder="请输入备注信息" class="textarea" name="textarea"></textarea>
+      </view>
+    </view>
+    <view class="btn-area">
+      <button class="btn-primary" formType="submit">立即撤回</button>
+    </view>
+  </form>
+</view>

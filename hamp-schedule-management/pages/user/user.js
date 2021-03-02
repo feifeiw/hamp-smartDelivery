@@ -1,5 +1,6 @@
 // pages/user/user.js
 const app = getApp()
+let that = this
 Page({
 
   /**
@@ -19,17 +20,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    console.log('用户信息', app.globalData)
+    that = this
     if (app.globalData.OPEN_ID && app.globalData.OPEN_ID != '') {
 			that.setData({
 				OPEN_ID: app.globalData.OPEN_ID
 			})
 		} else {
-      // 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
-      console.log('调用app.js定义callback')
 			app.userInfoLoadCallback = userInfo => {
-        console.log('调用callback', userInfo)
 				if (userInfo != '') {
 					that.setData({
 						OPEN_ID: app.globalData.OPEN_ID
@@ -37,7 +34,6 @@ Page({
 				}
 			}
     }
-    console.log('user', app.globalData)
     var sessionId = wx.getStorageSync('sessionId');
     wx.showLoading({
       title: '加载中',

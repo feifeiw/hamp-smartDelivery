@@ -2,7 +2,14 @@
 <!-- <text>pages/register/register.wxml</text> -->
 <view class="regiester">
   <view class="tips">未查询到注册信息，清先注册</view>
-  <form bindsubmit="registerSubmit" class="regiester_form">
+  <view class="regiester-tab">
+    <block wx:for="{{regiesterTabs}}" wx:key="*this">
+      <view id="{{index}}" class="tabcell {{ activeIndex==index?'active':'' }} " bindtap="tabClick">
+        {{item}}
+      </view>
+    </block>
+  </view>
+  <form bindsubmit="registerSubmit" class="regiester_form" wx:if="{{activeIndex==0}}">
     <view class="form_item"><input name="name" value="{{name}}" placeholder="请输入真实姓名" bindtap="bindName" /></view>
     <view class="regiester_item form_item">
       <input class="phoneNumber" maxlength="11" name="phoneNumber" value="{{phoneNumber}}" placeholder="请输入手机号码" bindinput='bindPhoneInput' />
@@ -10,6 +17,14 @@
       <text class="code" wx:else>{{getCodeValue}}</text>
     </view>
     <view class="form_item"><input name="verificationCode" value="{{verificationCode}}" placeholder="请输入验证码" bindtap="bindCode" /></view>
+    <view class="errMsg" wx:if="{{errMsg !== ''}}">
+      <text class="msgSpan">{{errMsg}}</text>
+    </view>
+    <button form-type="submit" class="regiesterBtn">立即注册</button>
+  </form>
+  <form bindsubmit="accountSubmit" class="regiester_form" wx:if="{{activeIndex==1}}">
+    <view class="form_item"><input name="accountNO" value="{{accountNO}}" placeholder="请输入账号" bindtap="bindAccountNO" /></view>
+    <view class="form_item"><input name="password" type="password" value="{{password}}" placeholder="请输入密码" bindtap="bindPassword" /></view>
     <view class="errMsg" wx:if="{{errMsg !== ''}}">
       <text class="msgSpan">{{errMsg}}</text>
     </view>

@@ -9,10 +9,20 @@
     <view class="dateContent">
       <view class="choseDate">
         <view class="arrow {{heightAuto?'heightAuto':''}}" bindtap="arrowClick" data-flag="{{heightAuto}}"><image src="../../static/image/arrow_down.png" class=""></image></view>
-        <text class="day">{{choseDate}}</text>
+        <view class="raletive">
+          <text class="day">{{choseDate}}</text>
+          <view class="revoke" wx:if="{{isVacateflag}}" bindtap="revokeLeave">
+            <image src="../../static/image/revoke.png"></image>
+            <text>撤销请假</text>
+          </view>
+        </view>
       </view>
       <view class="noteUl">
         <view class="noteLi" wx:for="{{dataArr}}" wx:key="caseid">
+          <!-- <view class="recall" bindtap="getReschedule" data-item="{{item}}">
+            <image src="../../static/image/recall.png"></image>
+            <text>撤回重排</text>
+          </view> -->
           <text style="color:#000;font-weight:blod;">案号：{{item.caseno}}</text>
           <view class="noteLi_block">
             <text>案     由：</text><text>{{item.cause}}</text>

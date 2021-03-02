@@ -1,0 +1,8 @@
+{
+  "usingComponents": {},
+  "navigationStyle": "default",
+  "navigationBarTitleText": "请假",
+  "navigationBarTextStyle": "black",
+  "navigationBarBackgroundColor": "#5275f5",
+  "backgroundTextStyle": "dark"
+}

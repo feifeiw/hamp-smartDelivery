@@ -1,6 +1,11 @@
 {
   "pages":[
+    "pages/search/search",
+    "pages/fileTransfer/fileTransfer",
+    "pages/fileTransferInfo/fileTransferInfo",
     "pages/index/index",
+    "pages/recall/recall",
+    "pages/leave/leave",
     "pages/user/user",
     "pages/register/register",
     "pages/authorization/authorization"
@@ -21,6 +26,16 @@
       "text": "日程",
       "iconPath": "static/image/date.png",
       "selectedIconPath": "static/image/date_select.png"
+    },{
+      "pagePath": "pages/leave/leave",
+      "text": "请假",
+      "iconPath": "static/image/leave.png",
+      "selectedIconPath": "static/image/leave_select.png"
+    },{
+      "pagePath": "pages/search/search",
+      "text": "查询",
+      "iconPath": "static/image/search.png",
+      "selectedIconPath": "static/image/search_select.png"
     },{
       "pagePath": "pages/user/user",
       "text": "我的",

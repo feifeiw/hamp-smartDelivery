@@ -1,0 +1,54 @@
+<!--pages/leave/leave.wxml-->
+<view class="leaveWrapper">
+  <form catchsubmit="vacateSubmit" class="formContent">
+    <view class="section">
+      <view class="section__title">开始日期</view>
+      <view class="itembox">
+        <picker mode="date" value="{{begindate}}" bindchange="bindDateChange" data-index="1">
+          <view class="picker">
+            <text class="color_9" wx:if="{{!begindate}}">请选择</text>{{begindate}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section__title">开始日期时间段</view>
+      <view class="itembox">
+        <picker bindchange="bindPickerChange" value="{{amflag1}}" range="{{arr}}" data-index="1">
+          <view class="picker">
+            <text class="color_9" wx:if="{{!amflag1}}">请选择</text>{{arr[amflag1]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section__title">结束日期</view>
+      <view class="itembox">
+        <picker mode="date" value="{{enddate}}" bindchange="bindDateChange" data-index="2">
+          <view class="picker">
+            <text class="color_9" wx:if="{{!enddate}}">请选择</text>{{enddate}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section__title">结束日期时间段</view>
+      <view class="itembox">
+        <picker bindchange="bindPickerChange" value="{{amflag2}}" range="{{arr}}" data-index="2">
+          <view class="picker">
+            <text class="color_9" wx:if="{{!amflag2}}">请选择</text>{{arr[amflag2]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section__title">请假事由</view>
+      <view class="itembox">
+        <textarea placeholder="请输入请假事由" class="textarea" name="textarea"></textarea>
+      </view>
+    </view>
+    <view class="btn-area">
+      <button class="btn-primary" formType="submit">提  交</button>
+    </view>
+  </form>
+</view>
