@@ -10,7 +10,9 @@ Page({
     dataArr: [ ],
 		roldAuth: '',
 		caseValue: '',
-		caseNO: ''
+    caseNO: '',
+    yearArr: [2021, 2020, 2019],
+    index: 0,
   },
 
   /**
@@ -28,6 +30,12 @@ Page({
       caseValue: e.detail.value
     })
   },
+  // 时间选择
+	bindPickerChange(e) {
+    this.setData({
+      index: e.detail.value
+    })
+	},
   // 查询卷宗列表
   getCaseList: function () {
     wx.showLoading({
@@ -42,7 +50,7 @@ Page({
 				url: 'https://51jka.com.cn/wxJudge/queryCaseByCaseNO',
 				data: {
 					courtid: wx.getStorageSync('courtid'),
-					year0: '',
+					year0: that.data.yearArr[that.data.index],
 					caseNO: that.data.caseValue
 				},
 				method: 'GET',

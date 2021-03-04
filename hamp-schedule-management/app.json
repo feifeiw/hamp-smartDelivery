@@ -1,9 +1,9 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/search/search",
     "pages/fileTransfer/fileTransfer",
     "pages/fileTransferInfo/fileTransferInfo",
-    "pages/index/index",
     "pages/recall/recall",
     "pages/leave/leave",
     "pages/user/user",
