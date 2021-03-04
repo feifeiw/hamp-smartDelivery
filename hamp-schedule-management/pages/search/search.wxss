@@ -29,6 +29,7 @@
 }
 .tabList{
   padding-top: 120rpx;
+  padding-bottom: 60rpx;
 }
 .tabList .tabLi{
   width: 100%;

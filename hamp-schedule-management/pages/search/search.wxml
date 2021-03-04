@@ -11,12 +11,6 @@
          <button class="searchBtn" bindtap="getCaseList">查询</button>
       </view>
     </view>
-    <!-- <view class="tabcontent">
-      <view class="picker_group">
-        <input class="weui-input casePicker" name="caseNO" placeholder="请输入案号" type="text" bindinput="bindKeyInput"/>
-         <button class="searchBtn" bindtap="getCaseList">查询</button>
-      </view>
-    </view> -->
     <!-- 列表 -->
     <view class="tabList">
         <view wx:if="{{dataArr.length > 0}}"  class="borderBt">

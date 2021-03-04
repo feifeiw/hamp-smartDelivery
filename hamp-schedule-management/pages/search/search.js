@@ -38,6 +38,13 @@ Page({
 	},
   // 查询卷宗列表
   getCaseList: function () {
+    if (!that.data.caseValue) {
+      wx.showToast({
+        title: '请输入案号！',
+        icon: 'none',
+      })
+      return
+    }
     wx.showLoading({
 			title: '查询中',
 		})
@@ -55,12 +62,12 @@ Page({
 				},
 				method: 'GET',
 				success: function(res) {
-					wx.hideLoading();
 					if (res.data) {
             that.setData({
-							dataArr: res.data
-						})
-					}
+              dataArr: res.data
+            })
+          }
+          wx.hideLoading();
 				},
 				fail: function(res) {
 					wx.hideLoading();
