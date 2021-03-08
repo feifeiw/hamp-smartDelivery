@@ -81,7 +81,7 @@ Page({
 			url: '../recall/recall?item=' + item + '&scheduleID=' +scheduleID
 		})
 	},
-	// 跳转流转过程
+	// 跳转排期信息
 	linkTransBaseInfo() {
 		let caseNO = that.data.caseInfo.caseNO
 		wx.navigateTo({

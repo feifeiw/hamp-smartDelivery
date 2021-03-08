@@ -90,7 +90,7 @@ Page({
       }, 1500);
 		}
   },
-  // 跳转流转过程
+  // 跳转排期信息
 	linkTransBase(e) {
     console.log(e.currentTarget.dataset.item)
 		let item =  e.currentTarget.dataset.item
